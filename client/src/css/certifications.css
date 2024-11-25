@@ -1,0 +1,174 @@
+/* certifications.css */
+
+.certifications-container {
+    width: 100%;
+    max-width: 64rem; /* Equivalent to Tailwind's max-w-4xl */
+    margin: 0 auto; /* Center the container */
+    padding: 2rem 1rem; /* Equivalent to px-4 py-8 */
+  }
+  
+  .certifications-title {
+    font-size: 1.875rem; /* Equivalent to Tailwind's text-3xl */
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem; /* mb-4 */
+    margin-top: 3rem; /* mb-4 */
+  }
+  
+  .certifications-subtitle {
+    text-align: center;
+    color: var(--color-secondary); /* Equivalent to Tailwind's text-gray-600 */
+    margin-bottom: 5rem; /* mb-8 */
+  }
+  
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+    height: auto;
+  }
+  
+  .slider-motion-div {
+    position: absolute;
+    width: 30%;
+    height: fit-content;
+    
+    /* Center horizontally and vertically */
+    top: 0%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .slider-content {
+    background-color: white;
+    border-radius: 0.5rem; /* Equivalent to Tailwind's rounded-lg */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Equivalent to shadow-lg */
+    padding: 2rem;
+    margin: 0.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .slider-content-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .icon-container {
+    margin-bottom: 1.5rem;
+  }
+  
+  .icon {
+    width: 3rem;
+    height: 3rem;
+    color: #4C51BF; /* Equivalent to Tailwind's text-primary */
+  }
+  
+  .certification-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .slider-content-bottom {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .certification-description {
+    color: #718096; /* Equivalent to Tailwind's text-gray-600 */
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  
+  /* Updated Navigation Buttons */
+  .slider-button {
+    position: absolute;
+    top: 40%; /* Moved up from 50% */
+    background-color: white;
+    border-radius: 9999px; /* Fully rounded */
+    padding: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    transition: background-color 0.2s;
+    /* Removed transform: translateY(-50%); */
+  }
+  
+  .slider-button:hover {
+    background-color: #f7fafc; /* Equivalent to Tailwind's hover:bg-gray-100 */
+  }
+  
+  /* Adjusted Positioning for Prev Button */
+  .slider-button-prev {
+    left: calc(35% - 15% - 0px); /* 35% (left) - 15% (half width) - 20px spacing */
+    /* This calculates to left: 20% - 20px */
+  }
+  
+  /* Adjusted Positioning for Next Button */
+  .slider-button-next {
+    right: calc(35% - 15% - 0px); /* Similar logic for the next button */
+    /* This calculates to right: 20% - 20px */
+  }
+  
+  .slider-button-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #718096; /* Equivalent to Tailwind's text-gray-600 */
+  }
+  
+  .slider-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  
+  .slider-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 9999px;
+    margin: 0 0.5rem;
+    background-color: #e2e8f0; /* Equivalent to Tailwind's bg-gray-300 */
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .slider-dot:hover {
+    background-color: #cbd5e0; /* Equivalent to Tailwind's hover:bg-gray-400 */
+  }
+  
+  .slider-dot.active {
+    background-color: #4C51BF; /* Equivalent to Tailwind's bg-primary */
+  }
+  
+  
+  @media screen and (max-width:768px) {
+
+    .slider-motion-div {
+        position: absolute;
+        width: 100%;
+        height: fit-content;
+        
+        /* Center horizontally and vertically */
+        top: 0%;
+        left: 0%;
+        transform: translate(0, -50%); /* Adjusted for full width */
+      }
+    
+    /* Adjusted Navigation Buttons for Mobile */
+
+    
+    .slider-button-prev {
+      left: 10px; /* Left side */
+    }
+    
+    .slider-button-next {
+      right: 10px; /* Right side */
+    }
+  }

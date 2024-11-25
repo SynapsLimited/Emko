@@ -1,0 +1,145 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Main Group */
+.main-group {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+/* Entry Content */
+.entry-content {
+  padding: 0 50px;
+}
+
+/* Intro Section */
+.intro-section {
+
+  padding: 100px 0;
+}
+
+.intro-columns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intro-text {
+  flex: 1;
+  text-align: center;
+  padding: 0 40px;
+}
+
+.intro-text h2 {
+  margin-top: 0;
+  font-size: clamp(22.544px, 2rem, 37px);
+  line-height: 1.2;
+}
+
+.intro-text p {
+  padding: 30px 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+
+.intro-image {
+  flex: 1;
+  text-align: center;
+}
+
+.intro-image img {
+  border-radius: 47px;
+  max-width: 100%;
+  height: auto;
+  width: 682px;
+}
+
+/* Vision and Mission */
+.vision-mission {
+  display: flex;
+  justify-content: center;
+  margin: 80px 0;
+}
+
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.column {
+  flex: 1;
+  text-align: center;
+  padding: 0 60px;
+}
+
+.column h2 {
+  font-size: 24px;
+}
+
+.column img {
+  width: 40px;
+  margin: 0 auto;
+  padding: 20px 0 20px 0;
+  filter: invert(20%) sepia(100%) saturate(500%) hue-rotate(200deg) brightness(1.2);
+}
+
+.column p {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* Values Section */
+.values-section h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.values-section .columns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.values-section .column {
+  flex: 1;
+  text-align: center;
+  padding: 0 50px;
+}
+
+.values-section .column h2 {
+  font-size: 24px;
+}
+
+.values-section .column img {
+  width: 40px;
+  margin: 0 auto;
+  padding: 20px 0;
+  filter: invert(20%) sepia(100%) saturate(500%) hue-rotate(200deg) brightness(1.2);
+}
+
+.values-section .column p {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .intro-columns,
+  .vision-mission .columns,
+  .values-section .columns {
+    flex-direction: column;
+  }
+
+  .intro-text,
+  .intro-image,
+  .column {
+    padding: 20px;
+  }
+
+  .intro-image img {
+    width: 100%;
+  }
+}
