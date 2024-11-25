@@ -3,10 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './../css/cookieconsent.css';
-import { useTranslation } from 'react-i18next';
 
 const CookieConsent = () => {
-  const { t } = useTranslation();
   const [showConsent, setShowConsent] = useState(false);
 
   useEffect(() => {
@@ -34,16 +32,15 @@ const CookieConsent = () => {
     <div className="cookie-consent">
       <div className="cookie-consent__content">
         <p>
-          {t('cookieConsent.text')}
-          <Link to="/privacy-policy" className="cookie-consent__link">{t('cookieConsent.learnMore')}</Link>
+          We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept", you consent to our use of cookies. You can learn more in our <Link to="/privacy-policy" className="cookie-consent__link">Privacy Policy</Link>.
         </p>
         <div className="cookie-consent__buttons">
-          <a className="cookie-consent__button accept" onClick={acceptCookies}>
-            {t('cookieConsent.accept')}
-          </a>
-          <a className="cookie-consent__button decline" onClick={declineCookies}>
-            {t('cookieConsent.decline')}
-          </a>
+          <button className="cookie-consent__button accept" onClick={acceptCookies}>
+            Accept
+          </button>
+          <button className="cookie-consent__button decline" onClick={declineCookies}>
+            Decline
+          </button>
         </div>
       </div>
     </div>

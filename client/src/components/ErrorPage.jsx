@@ -2,16 +2,14 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
 const ErrorPage = () => {
-  const { t } = useTranslation();
-
   return (
     <section data-aos="fade-up" className="container error-page">
       <div className="center">
-        <Link to="/" className="btn btn-primary">{t('errorPage.backButton')}</Link>
-        <h3>{t('errorPage.message')}</h3>
+        <Link to="/" className="btn btn-primary">Go Back Home</Link>
+        <h3>Oops! Something went wrong.</h3>
+        <p>We can’t seem to find the page you’re looking for. It might have been moved or deleted.</p>
       </div>
     </section>
   );
