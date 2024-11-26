@@ -95,7 +95,7 @@ const Home = () => {
               cilësia e produkteve tona, por edhe nga një shërbim i shkëlqyeshëm
               dhe përkrahja që meritoni.
             </p>
-              <a href="/about-us" className="btn btn-primary margin-top">
+              <a href="/about" className="btn btn-primary margin-top">
                 Rreth Nesh
               </a>
           </div>
