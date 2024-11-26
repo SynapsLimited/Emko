@@ -372,7 +372,7 @@
   }
 
   .menu-toggle .bar {
-    background-color: var(--color-white);
+    background-color: var(--color-primary);
   }
 }
 
