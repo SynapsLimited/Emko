@@ -1,0 +1,193 @@
+/* src/css/latestproductsmodal.css */
+
+.latest-products-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+}
+
+.latest-products-modal-content {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 800px; /* Increased max-width for horizontal stretching */
+  width: 90%;
+  max-height: 90vh;
+  padding: 1.5rem;
+  text-align: left;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  position: relative; /* To position the 'X' button */
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-close-button:hover {
+  color: #000;
+}
+
+.latest-products-modal-content h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+.latest-products-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.latest-product-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.latest-product-item:last-child {
+  border-bottom: none;
+}
+
+.latest-product-info-horizontal {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.latest-product-image-container {
+  flex: 0 0 150px; /* Fixed width for images */
+}
+
+.latest-product-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.latest-product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.latest-product-details h4 {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.product-category {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 0.5rem;
+}
+
+.latest-product-details p {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.product-card-colors-spacing {
+  margin: 0.5rem 0;
+}
+
+.product-card-colors {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.color-circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.more-colors {
+  background: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.latest-products-modal-content .btn {
+  margin-top: 1rem;
+  align-self: flex-end;
+}
+
+.loading-message,
+.error-message,
+.no-products-message {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 2rem 0;
+}
+
+.loading-message {
+  color: #555;
+}
+
+.error-message {
+  color: red;
+}
+
+.no-products-message {
+  color: #777;
+}
+
+/* Responsive Design for Modal */
+
+@media screen and (max-width: 768px) {
+  .latest-products-modal-content {
+    max-width: 90%;
+    padding: 1rem;
+  }
+
+  .latest-product-info-horizontal {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .latest-product-image-container {
+    flex: 0 0 auto;
+  }
+
+  .latest-product-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .latest-product-details {
+    width: 100%;
+    text-align: center;
+  }
+
+  .modal-close-button {
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.25rem;
+  }
+}

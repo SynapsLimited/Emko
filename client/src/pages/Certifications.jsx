@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import '../css/certifications.css'; // Import the CSS file
+import Hero from './../components/Hero'
+
 
 const Certifications = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -119,19 +121,15 @@ const Certifications = () => {
   </Helmet> 
 
   {/* Hero Section */}
-  <div
-    className="hero-container hero-container-normal hero-container-certifications"
-    style={{ backgroundPositionY: `${scrollPosition * 0}px` }} // Apply parallax effect
-  >
+  <Hero
+        type="certifications"
+        scrollPosition={scrollPosition}
+        title="Certifikime"
+        description="Shikoni certifikatat tona të cilësisë dhe standardeve ndërkombëtare."
+      />
 
 
 
-      <div className="hero-content">
-     {/* Text Section */}
-      <h1 className="hero-title"> Çertifikime </h1>
-
-    </div>
-  </div>
     <div className="certifications-container">
       <h2 className="certifications-title">Our Certifications</h2>
       <p className="certifications-subtitle">

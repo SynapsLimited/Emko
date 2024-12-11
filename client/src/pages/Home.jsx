@@ -1,9 +1,11 @@
+// src/pages/Home.jsx
+
 import React, { useEffect, useState } from 'react';
 import './../css/home.css';
 import StatsSection from '../components/StatsSection';
-import ProductsSection from '../components/ProductsSection'
+import ProductsSection from '../components/ProductsSection';
 import { Helmet } from 'react-helmet-async';
-
+import Hero from '../components/Hero'; // Import the updated Hero component
 
 const Home = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -57,24 +59,8 @@ const Home = () => {
         <title>Emko</title>
       </Helmet> 
 
-      {/* Hero Section */}
-
-      <div
-        className="hero-container hero-container-normal hero-container-home"
-        style={{ backgroundPositionY: `${scrollPosition * 0}px` }} // Apply parallax effect
-      >
-        <div className="hero-content">
-          {/* Logo Image */}
-          <img src="/assets/emko-logo.png" alt="Emko Logo" className="hero-logo" />
-          {/* Text Section */}
-
-          {/* Contact Button */}
-          <a href="/contact" className=" btn btn-primary btn-home-hero">
-            Kontakt
-          </a>
-        </div>
-      </div>
-
+      {/* New Hero Component */}
+      <Hero type="home" scrollPosition={scrollPosition} />
 
       <main>
         {/* About Us Section */}
@@ -95,9 +81,9 @@ const Home = () => {
               cilësia e produkteve tona, por edhe nga një shërbim i shkëlqyeshëm
               dhe përkrahja që meritoni.
             </p>
-              <a href="/about" className="btn btn-primary margin-top">
-                Rreth Nesh
-              </a>
+            <a href="/about" className="btn btn-primary margin-top">
+              Rreth Nesh
+            </a>
           </div>
         </section>
 
@@ -110,24 +96,5 @@ const Home = () => {
     </div>
   );
 };
-
-
-
-// Counter Component
-function Counter({ from, to }) {
-  const [count, setCount] = useState(from);
-
-  useEffect(() => {
-    let timer;
-    if (count < to) {
-      // Adjusting the speed based on the target value
-      const duration = to <= 99 ? 100 : 20; // If the value is small (like 30), slow it down
-      timer = setTimeout(() => setCount(count + 1), duration);
-    }
-    return () => clearTimeout(timer);
-  }, [count, to]);
-
-  return <>{count}+</>;
-}
 
 export default Home;

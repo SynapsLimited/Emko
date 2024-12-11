@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import './../css/projects.css';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
+import Hero from './../components/Hero'
+
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -102,14 +104,12 @@ export default function Projects() {
       </Helmet>
 
       {/* Hero Section */}
-      <div
-        className="hero-container hero-container-normal hero-container-projects"
-        style={{ backgroundPositionY: `${scrollPosition * 0}px` }}
-      >
-        <div className="hero-content">
-          <h1 className="hero-title"> Projekte </h1>
-        </div>
-      </div>
+      <Hero
+        type="projects"
+        scrollPosition={scrollPosition}
+        title="Projekte"
+        description="Shikoni projektet tona më të reja dhe më të suksesshme."
+      />
 
       <div className="container">
         {projects.map((project, index) => (

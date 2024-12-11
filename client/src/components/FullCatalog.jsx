@@ -9,7 +9,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import SearchBar from './SearchBar';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
-
+import Hero from './../components/Hero';
+import categories from '../data/categories'; // Import categories
 
 const FullCatalog = () => {
   const navigate = useNavigate();
@@ -21,34 +22,20 @@ const FullCatalog = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  // Mapping from English category names to their Albanian translations
-  const categoryTranslationMap = {
-    'Executive Chairs': 'Karrige Ekzekutive',
-    'Plastic Chairs': 'Karrige Plastike',
-    'Waiting Chairs': 'Karrige Pritëse',
-    'Utility Chairs': 'Karrige Utilitare',
-    'Amphitheater': 'Amfiteatër',
-    'Auditoriums': 'Auditore',
-    'Seminar Halls': 'Salla seminarësh',
-    'School Classes': 'Klasa Shkolle',
-    'Tables': 'Tavolina',
-    'Laboratories': 'Laboratorë',
-    'Mixed': 'Miks',
-    'Industrial Lines': 'Linja Industriale',
-    'Metal Cabinets': 'Dollap Metalik',
-    'Metal Shelves': 'Skafale Metalik',
-    'Wardrobes': 'Dollapë',
-    'Sofas': 'Kolltuqe',
-    'Stadiums': 'Stadiume',
-    'All Products': 'Të gjitha produktet',
-  };
+  // Generate category translation map from categories data
+  const categoryTranslationMap = categories.reduce((acc, cat) => {
+    acc[cat.name_en] = cat.name;
+    return acc;
+  }, {});
+  // Add 'All Products' translation
+  categoryTranslationMap['All Products'] = 'Të gjitha produktet';
 
-    // Get the last element of the translation map
-    const lastCategoryKey = Object.keys(categoryTranslationMap).slice(-1)[0];
-    const lastCategoryValue =
-      currentLanguage === 'en'
-        ? lastCategoryKey
-        : categoryTranslationMap[lastCategoryKey];
+  // Determine display name for the hero section
+  const lastCategoryKey = Object.keys(categoryTranslationMap).slice(-1)[0];
+  const lastCategoryValue =
+    currentLanguage === 'en'
+      ? lastCategoryKey
+      : categoryTranslationMap[lastCategoryKey];
 
   // Helper function to normalize text
   const normalizeText = (text) => {
@@ -205,7 +192,7 @@ const FullCatalog = () => {
 
   // Handle suggestion click
   const handleSuggestionClick = (suggestion) => {
-    navigate(`/products/${suggestion.product.slug}`); // Assuming you're using slug for routing
+    navigate(`/products/${suggestion.product.slug}`); // Using slug for routing
   };
 
   // Helper function to truncate description
@@ -219,34 +206,28 @@ const FullCatalog = () => {
 
   return (
     <div>
-             <Helmet>
-    <title>Emko - {lastCategoryValue}</title>
-  </Helmet> 
-      {/* Hero Section */}
-      <div
-        className="hero-container hero-container-normal hero-container-products"
-        style={{ backgroundPositionY: `${scrollPosition * 0}px` }}
-      >
-        <div className="hero-content">
-          <h1 className="hero-title">
-          {lastCategoryValue}
-          </h1>
+      <Helmet>
+        <title>Emko - {lastCategoryValue}</title>
+      </Helmet>
 
-        </div>
-      </div>
+      {/* Hero Section */}
+      <Hero
+        type="products" // Define a type that corresponds to your CSS classes
+        scrollPosition={scrollPosition}
+        title={lastCategoryValue}
+        description="Browse our extensive catalog of products, sorted alphabetically for your convenience."
+      />
 
       {/* Category Navigation Buttons */}
       <div className="category-buttons">
-        {Object.keys(categoryTranslationMap).map((key) => (
-          key !== 'All Products' && (
-            <Link
-              key={key}
-              to={`/products/category/${key}`}
-              className="btn btn-primary"
-            >
-              {currentLanguage === 'en' ? key : categoryTranslationMap[key]}
-            </Link>
-          )
+        {categories.map((cat) => (
+          <Link
+            key={cat.id}
+            to={`/products/category/${cat.slug}`} // Use slug here
+            className="btn btn-primary"
+          >
+            {currentLanguage === 'en' ? cat.name_en : cat.name}
+          </Link>
         ))}
         <Link to="/full-catalog" className="btn btn-primary">
           {currentLanguage === 'en' ? 'All Products' : categoryTranslationMap['All Products']}
@@ -313,25 +294,25 @@ const FullCatalog = () => {
                     )}
                     {/* Truncated Description */}
                     <p>{truncateDescription(description, 20)}</p>
-{product.colors && product.colors.length > 0 && (
-  <div className='product-card-colors-spacing'>
-  <div className="product-card-colors">
-    {product.colors.slice(0, 4).map((color, index) => (
-      <div
-        key={index}
-        className="color-circle"
-        style={{ backgroundColor: color.hex }}
-      ></div>
-    ))}
-    {product.colors.length > 4 && (
-      <div className="color-circle more-colors">+</div>
-    )}
-  </div>
-  </div>
-)}
+                    {product.colors && product.colors.length > 0 && (
+                      <div className='product-card-colors-spacing'>
+                        <div className="product-card-colors">
+                          {product.colors.slice(0, 4).map((color, index) => (
+                            <div
+                              key={index}
+                              className="color-circle"
+                              style={{ backgroundColor: color.hex }}
+                            ></div>
+                          ))}
+                          {product.colors.length > 4 && (
+                            <div className="color-circle more-colors">+</div>
+                          )}
+                        </div>
+                      </div>
+                    )}
 
                     <Link
-                      to={`/products/${product.slug}`} // Using product.slug for routing
+                      to={`/products/${product.slug}`} // Using slug for routing
                       className="btn btn-secondary"
                     >
                       View Details

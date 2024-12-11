@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { jsPDF } from 'jspdf';
 import Loader from './Loader'; // Import the Loader component
 import { useTranslation } from 'react-i18next';
+import categories from '../data/categories'; // Import categories
 
 // Helper function to convert array buffer to Base64
 const arrayBufferToBase64 = (buffer) => {
@@ -42,7 +43,6 @@ const loadFonts = async (doc) => {
     { name: 'HindSiliguri-Light.ttf', fontName: 'HindSiliguriLight', fontStyle: 'normal' },
     { name: 'HindSiliguri-Bold.ttf', fontName: 'HindSiliguriBold', fontStyle: 'bold' },
     { name: 'HindSiliguri-SemiBold.ttf', fontName: 'HindSiliguriSemiBold', fontStyle: 'bold' },
-
   ];
 
   for (const font of fonts) {
@@ -266,7 +266,7 @@ const addCoverPage = async (doc, category, categoryTranslationMap, currentLangua
     // Add 2nd Section: Produktet
     addSection(
       'Produktet',
-      'Një gamë e gjerë produktesh të përfshira në 14 kategori për të mobiluar ambientet tuaja me shumllojshmërinë dhe kualitetin që Emko ofron.'
+      'Një gamë e gjerë produktesh të përfshirë në 14 kategori për të mobiluar ambientet tuaja me shumllojshmërinë dhe kualitetin që Emko ofron.'
     );
 
     // Add 3rd Section: Misioni & Vizioni
@@ -316,7 +316,7 @@ const addCoverPage = async (doc, category, categoryTranslationMap, currentLangua
 
     addSection(
       'Produktet',
-      'Një gamë e gjerë produktesh të përfshira në 14 kategori për të mobiluar ambientet tuaja me shumllojshmërinë dhe kualitetin që Emko ofron.'
+      'Një gamë e gjerë produktesh të përfshirë në 14 kategori për të mobiluar ambientet tuaja me shumllojshmërinë dhe kualitetin që Emko ofron.'
     );
 
     addSection(
@@ -327,7 +327,7 @@ const addCoverPage = async (doc, category, categoryTranslationMap, currentLangua
 };
 
 const DownloadCatalog = () => {
-  const { category } = useParams(); // Get the category from the URL
+  const { category } = useParams(); // Get the category slug from the URL
   const navigate = useNavigate(); // For navigation after download
   const [isLoading, setIsLoading] = useState(true); // State for loading indicator
   const downloadInitiated = useRef(false); // Ref to prevent multiple downloads
@@ -335,27 +335,13 @@ const DownloadCatalog = () => {
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language;
 
-  // Mapping from English category names to translations
-  const categoryTranslationMap = {
-    'Executive Chairs': { sq: 'Karrige Ekzekutive', en: 'Executive Chairs' },
-    'Plastic Chairs': { sq: 'Karrige Plastike', en: 'Plastic Chairs' },
-    'Waiting Chairs': { sq: 'Karrige Pritëse', en: 'Waiting Chairs' },
-    'Utility Chairs': { sq: 'Karrige Utilitare', en: 'Utility Chairs' },
-    'Amphitheater': { sq: 'Amfiteatër', en: 'Amphitheater' },
-    'Auditoriums': { sq: 'Auditore', en: 'Auditoriums' },
-    'Seminar Halls': { sq: 'Salla Seminarësh', en: 'Seminar Halls' },
-    'School Classes': { sq: 'Klasa Shkolle', en: 'School Classes' },
-    'Tables': { sq: 'Tavolina', en: 'Tables' },
-    'Laboratories': { sq: 'Laboratorë', en: 'Laboratories' },
-    'Mixed': { sq: 'Miks', en: 'Mixed' },
-    'Industrial Lines': { sq: 'Linja Industriale', en: 'Industrial Lines' },
-    'Metal Cabinets': { sq: 'Dollap Metalik', en: 'Metal Cabinets' },
-    'Metal Shelves': { sq: 'Skafale Metalik', en: 'Metal Shelves' },
-    'Wardrobes': { sq: 'Dollapë', en: 'Wardrobes' },
-    'Sofas': { sq: 'Kolltuqe', en: 'Sofas' },
-    'Stadiums': { sq: 'Stadiume', en: 'Stadiums' },
-    'All Products': { sq: 'Të gjitha produktet', en: 'All Products' },
-  };
+  // Generate category translation map from categories data
+  const categoryTranslationMap = categories.reduce((acc, cat) => {
+    acc[cat.slug] = { sq: cat.name, en: cat.name_en };
+    return acc;
+  }, {});
+  // Add 'All Products' translation
+  categoryTranslationMap['all-products'] = { sq: 'Të gjitha produktet', en: 'All Products' };
 
   useEffect(() => {
     const fetchAndDownload = async () => {
@@ -373,16 +359,17 @@ const DownloadCatalog = () => {
 
         // Filter products by category if a category is specified
         const filteredProducts = category
-          ? data.filter(
-              (product) =>
-                product.category &&
-                product.category.toLowerCase() === category.toLowerCase()
-            )
-          : data;
+        ? data.filter(
+            (product) =>
+              product.category &&
+              product.category.toLowerCase() === categoryTranslationMap[category].en.toLowerCase()
+          )
+        : data;
+      
 
         if (filteredProducts.length === 0) {
-          alert('Nuk ka produkte në këtë kategori.');
-          navigate('/'); // Redirect to Home.jsx
+          alert(currentLanguage === 'en' ? 'No products found in this category.' : 'Nuk ka produkte në këtë kategori.');
+          navigate('/full-catalog'); // Redirect to FullCatalog.jsx
           return;
         }
 
@@ -402,9 +389,11 @@ const DownloadCatalog = () => {
         } catch (error) {
           console.error('Error loading fonts:', error);
           alert(
-            `Gabim gjatë ngarkimit të fonteve: ${error.message}. Ju lutemi kontrolloni që filet e fonteve ekzistojnë dhe provoni përsëri.`
+            currentLanguage === 'en'
+              ? `Error loading fonts: ${error.message}. Please ensure the font files exist and try again.`
+              : `Gabim gjatë ngarkimit të fonteve: ${error.message}. Ju lutemi kontrolloni që filet e fonteve ekzistojnë dhe provoni përsëri.`
           );
-          navigate('/'); // Redirect to Home.jsx
+          navigate('/full-catalog'); // Redirect to FullCatalog.jsx
           return; // Exit the function if fonts fail to load
         }
 
@@ -512,7 +501,7 @@ const DownloadCatalog = () => {
           if (product.colors && product.colors.length > 0) {
             const colors =
               currentLanguage === 'en'
-                ? product.colors.map((c) => ({ ...c, name: c.nameEn || c.name }))
+                ? product.colors.map((c) => ({ ...c, name: c.name_en || c.name }))
                 : product.colors;
 
             const colorsPerRow = 5; // Fixed number of colors per row
@@ -548,7 +537,7 @@ const DownloadCatalog = () => {
                 );
 
                 // Add color name below the circle, centered
-                doc.setFont('HindSiliguriSemiBold', 'bold'); // Font weight 500 approximated with 'normal'
+                doc.setFont('HindSiliguriSemiBold', 'bold'); // Font weight 500 approximated with 'bold'
                 doc.setFontSize(10); // Approximate to 1rem (~12pt)
                 doc.setTextColor(0, 0, 0);
                 const colorName = color.name;
@@ -556,8 +545,9 @@ const DownloadCatalog = () => {
                 const textX = colorX + (colorCircleSize - textWidth) / 2;
                 doc.text(
                   colorName,
-                  textX,
-                  colorY + colorCircleSize + 6 // Position text below the circle
+                  colorX + colorCircleSize / 2,
+                  colorY + colorCircleSize + 6,
+                  { align: 'center' }
                 );
 
                 // Move to next color position
@@ -588,18 +578,22 @@ const DownloadCatalog = () => {
           : `Katalogu_i_Plotë.pdf`;
         doc.save(fileName);
 
-        // Update loading state and redirect to Home.jsx
+        // Update loading state and redirect to FullCatalog.jsx
         setIsLoading(false);
-        navigate('/full-catalog'); // Redirect to Full Catalog.jsx
+        navigate('/full-catalog'); // Redirect to FullCatalog.jsx
       } catch (error) {
         console.error('Error generating catalog PDF:', error);
-        alert(`Gabim gjatë gjenerimit të katalogut: ${error.message}. Ju lutemi provoni përsëri.`);
-        navigate('/full-catalog'); // Redirect to Full Catalog.jsx
+        alert(
+          currentLanguage === 'en'
+            ? `Error generating catalog: ${error.message}. Please try again.`
+            : `Gabim gjatë gjenerimit të katalogut: ${error.message}. Ju lutemi provoni përsëri.`
+        );
+        navigate('/full-catalog'); // Redirect to FullCatalog.jsx
       }
     };
 
     fetchAndDownload();
-  }, [category, navigate, currentLanguage]);
+  }, [category, navigate, currentLanguage, categoryTranslationMap]);
 
   return (
     <div>
@@ -607,7 +601,7 @@ const DownloadCatalog = () => {
         <Loader /> // Display Loader while generating PDF
       ) : (
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
-          <p>Shkarkimi u përfundua.</p>
+          <p>{currentLanguage === 'en' ? 'Download completed.' : 'Shkarkimi u përfundua.'}</p>
         </div>
       )}
     </div>

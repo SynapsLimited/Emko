@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import './../css/products.css';
 import ProductsSection from '../components/ProductsSection';
+import Hero from './../components/Hero'
 
 function Products() {
   const { t } = useTranslation();
@@ -32,19 +33,13 @@ function Products() {
         <title> Emko - Produkte </title>
       </Helmet>
       {/* Hero Section */}
-  <div
-    className="hero-container hero-container-normal hero-container-products"
-    style={{ backgroundPositionY: `${scrollPosition * 0}px` }} // Apply parallax effect
-  >
-
-
-
-      <div className="hero-content">
-     {/* Text Section */}
-      <h1 className="hero-title"> Produkte </h1>
-
-    </div>
-  </div>
+      {/* Updated Hero Component for Products Page */}
+      <Hero
+        type="products"
+        scrollPosition={scrollPosition}
+        title="Produkte"
+        description="Shikoni koleksionin tonë të produkteve të larmishme."
+      />
 
   <ProductsSection />
 

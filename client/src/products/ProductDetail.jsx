@@ -131,10 +131,17 @@ const ProductDetail = () => {
           )}
         </div>
 
-        {/* Back to products button */}
-        <Link to="/full-catalog" className="btn btn-secondary product-detail-btn">
-          Back to Products
-        </Link>
+        <div className="button-container">
+          <Link to="/full-catalog" className="btn btn-secondary product-detail-btn">
+            Back to Products
+          </Link>
+          <Link to="/" className="btn btn-primary product-detail-btn">
+            Back to Home
+          </Link>
+        </div>
+
+
+
       </section>
     </div>
   );

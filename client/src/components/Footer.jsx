@@ -44,10 +44,6 @@ const Footer = () => {
                 <img src={`${process.env.PUBLIC_URL}/assets/phone-call.png`} alt="Phone Number" />
                 <a href="tel:+355682099420" className="footer-link">+355 68 209 9420</a>
               </div>
-              <div className="social-row">
-                <img src={`${process.env.PUBLIC_URL}/assets/phone-call.png`} alt="Phone Number" />
-                <a href="tel:+355684008000" className="footer-link">+355 68 400 8000</a>
-              </div>
 
               <div className="social-row">
                 <img src={`${process.env.PUBLIC_URL}/assets/email.png`} alt="Email" />

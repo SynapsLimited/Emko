@@ -9,9 +9,11 @@ import './../css/products.css';
 import SearchBar from './SearchBar';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
+import Hero from './../components/Hero';
+import categories from '../data/categories'; // Import categories
 
 const ProductCatalog = () => {
-  const { category } = useParams();
+  const { category: categorySlug } = useParams();
   const navigate = useNavigate();
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language;
@@ -21,7 +23,16 @@ const ProductCatalog = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  // Mapping from category to CSS class name
+  // Find category data by slug
+  const categoryData = categories.find(cat => cat.slug === categorySlug);
+
+  // Destructure necessary fields if categoryData exists
+  const { name_en, name } = categoryData || {};
+
+  // Determine display name based on current language
+  const categoryDisplayName = currentLanguage === 'en' ? name_en : name;
+
+  // Mapping from English category names to CSS class names
   const categoryClassMap = {
     'Executive Chairs': 'hero-container hero-container-normal hero-container-executive-chairs',
     'Plastic Chairs': 'hero-container hero-container-normal hero-container-plastic-chairs',
@@ -42,39 +53,14 @@ const ProductCatalog = () => {
     'Stadiums': 'hero-container hero-container-normal hero-container-stadiums',
   };
 
-  // Mapping from English category names to their Albanian translations
-  const categoryTranslationMap = {
-    'Executive Chairs': 'Karrige Ekzekutive',
-    'Plastic Chairs': 'Karrige Plastike',
-    'Waiting Chairs': 'Karrige Pritëse',
-    'Utility Chairs': 'Karrige Utilitare',
-    'Amphitheater': 'Amfiteatër',
-    'Auditoriums': 'Auditore',
-    'Seminar Halls': 'Salla seminarësh',
-    'School Classes': 'Klasa Shkolle',
-    'Tables': 'Tavolina',
-    'Laboratories': 'Laboratorë',
-    'Mixed': 'Miks',
-    'Industrial Lines': 'Linja Industriale',
-    'Metal Cabinets': 'Dollap Metalik',
-    'Metal Shelves': 'Skafale Metalik',
-    'Wardrobes': 'Dollapë',
-    'Sofas': 'Kolltuqe',
-    'Stadiums': 'Stadiume',
-    'All Products': 'Të gjitha produktet',
-  };
+  // Generate category translation map from categories data
+  const categoryTranslationMap = categories.reduce((acc, cat) => {
+    acc[cat.name_en] = cat.name;
+    return acc;
+  }, {});
 
-  // Normalize the category name from the URL to match the keys
-  const normalizedCategory = category.replace(/-/g, ' ');
-
-  const heroClassName =
-    categoryClassMap[normalizedCategory] || 'hero-container-products';
-
-  // Get the display name based on the current language
-  const categoryDisplayName =
-    currentLanguage === 'en'
-      ? normalizedCategory
-      : categoryTranslationMap[normalizedCategory] || normalizedCategory;
+  // Determine CSS class for Hero component
+  const heroClassName = categoryData ? (categoryClassMap[name_en] || 'hero-container-products') : '';
 
   // Helper function to normalize text
   const normalizeText = (text) => {
@@ -86,6 +72,8 @@ const ProductCatalog = () => {
 
   // Fetch products by category from the backend
   useEffect(() => {
+    if (!categoryData) return; // Exit if categoryData is not found
+
     const fetchProducts = async () => {
       try {
         const response = await fetch(
@@ -93,7 +81,7 @@ const ProductCatalog = () => {
         );
         const data = await response.json();
         const filtered = data.filter(
-          (product) => product.category === normalizedCategory
+          (product) => product.category === name_en
         );
 
         const sortedProducts = filtered.sort((a, b) => {
@@ -125,14 +113,16 @@ const ProductCatalog = () => {
         setProducts(sortedProducts);
         setFilteredProducts(sortedProducts);
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching products:', error);
       }
     };
     fetchProducts();
-  }, [category, normalizedCategory, currentLanguage]);
+  }, [name_en, currentLanguage, categoryData]);
 
   // Update filtered products based on search query
   useEffect(() => {
+    if (!categoryData) return; // Exit if categoryData is not found
+
     if (searchQuery.trim() === '') {
       setFilteredProducts(products);
     } else {
@@ -159,7 +149,7 @@ const ProductCatalog = () => {
       });
       setFilteredProducts(filtered);
     }
-  }, [searchQuery, products, currentLanguage]);
+  }, [searchQuery, products, currentLanguage, categoryData]);
 
   // Track scroll position for parallax effect
   useEffect(() => {
@@ -248,33 +238,30 @@ const ProductCatalog = () => {
 
   return (
     <div>
-             <Helmet>
-    <title>Emko - {categoryDisplayName}</title>
-  </Helmet> 
+      <Helmet>
+        <title>Emko - {categoryDisplayName}</title>
+      </Helmet> 
+
       {/* Hero Section */}
-      <div
-        className={heroClassName}
-        style={{ backgroundPositionY: `${scrollPosition * 0}px` }}
-      >
-        <div className="hero-content">
-          <h1 className="hero-title">
-            {categoryDisplayName}
-          </h1>
-        </div>
-      </div>
+      {categoryData && (
+        <Hero
+          type={categorySlug} // Ensure this matches your CSS class naming
+          scrollPosition={scrollPosition}
+          title={categoryDisplayName}
+          description={`Browse products in ${categoryDisplayName}`}
+        />
+      )}
 
       {/* Category Navigation Buttons */}
       <div className="category-buttons">
-        {Object.keys(categoryTranslationMap).map((key) => (
-          key !== 'All Products' && (
-            <Link
-              key={key}
-              to={`/products/category/${key}`}
-              className="btn btn-primary"
-            >
-              {currentLanguage === 'en' ? key : categoryTranslationMap[key]}
-            </Link>
-          )
+        {categories.map((cat) => (
+          <Link
+            key={cat.id}
+            to={`/products/category/${cat.slug}`}
+            className="btn btn-primary"
+          >
+            {currentLanguage === 'en' ? cat.name_en : cat.name}
+          </Link>
         ))}
         <Link to="/full-catalog" className="btn btn-primary">
           {currentLanguage === 'en' ? 'All Products' : categoryTranslationMap['All Products']}
@@ -285,94 +272,101 @@ const ProductCatalog = () => {
       <div
         style={{ textAlign: 'center', marginBottom: '0px', marginTop: '40px' }}
       >
-        <Link to={`/download-catalog/${category}`} className="btn btn-primary">
+        <Link to={`/download-catalog/${categorySlug}`} className="btn btn-primary">
           Download Catalog for {categoryDisplayName}
         </Link>
       </div>
 
-      <p className="center-p">
-        Browse products in {categoryDisplayName}
-      </p>
+      {/* Conditional Rendering for "Category Not Found" */}
+      {!categoryData ? (
+        <h1>Category Not Found</h1> // Customize as needed
+      ) : (
+        <>
+          <p className="center-p">
+            Browse products in {categoryDisplayName}
+          </p>
 
-      <SearchBar
-        query={searchQuery}
-        setQuery={setSearchQuery}
-        suggestions={suggestions}
-        onSuggestionClick={handleSuggestionClick}
-      />
+          <SearchBar
+            query={searchQuery}
+            setQuery={setSearchQuery}
+            suggestions={suggestions}
+            onSuggestionClick={handleSuggestionClick}
+          />
 
-      {/* Product Catalog Section */}
-      <section className="container product-catalog-section">
-        <div className="product-catalog-cards">
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => {
-              const name =
-                currentLanguage === 'en'
-                  ? product.name_en || product.name
-                  : product.name;
-              const description =
-                currentLanguage === 'en'
-                  ? product.description_en || product.description
-                  : product.description;
-              const variations =
-                currentLanguage === 'en'
-                  ? product.variations_en || product.variations
-                  : product.variations;
+          {/* Product Catalog Section */}
+          <section className="container product-catalog-section">
+            <div className="product-catalog-cards">
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => {
+                  const name =
+                    currentLanguage === 'en'
+                      ? product.name_en || product.name
+                      : product.name;
+                  const description =
+                    currentLanguage === 'en'
+                      ? product.description_en || product.description
+                      : product.description;
+                  const variations =
+                    currentLanguage === 'en'
+                      ? product.variations_en || product.variations
+                      : product.variations;
 
-              return (
-                <div className="product-catalog-card" key={product._id}>
-                  {/* Image Container */}
-                  <div className="product-image-container">
-                    {product.images.length > 1 ? (
-                      <Slider {...sliderSettings}>
-                        {product.images.map((image, index) => (
-                          <img key={index} src={image} alt={name} />
-                        ))}
-                      </Slider>
-                    ) : (
-                      <img src={product.images[0]} alt={name} />
-                    )}
-                  </div>
-                  <div className="product-catalog-card-content">
-                    <h3>{name}</h3>
-                    {/* Variations */}
-                    {variations.length > 0 && (
-                      <h4>{variations.join(', ')}</h4>
-                    )}
-                    {/* Truncated Description */}
-                    <p>{truncateDescription(description, 20)}</p>
-{product.colors && product.colors.length > 0 && (
-   <div className='product-card-colors-spacing'>
- <div className="product-card-colors">
-    {product.colors.slice(0, 4).map((color, index) => (
-      <div
-        key={index}
-        className="color-circle"
-        style={{ backgroundColor: color.hex }}
-      ></div>
-    ))}
-    {product.colors.length > 4 && (
-      <div className="color-circle more-colors">+</div>
-    )}
-  </div>
-  </div>
-)}
+                  return (
+                    <div className="product-catalog-card" key={product._id}>
+                      {/* Image Container */}
+                      <div className="product-image-container">
+                        {product.images.length > 1 ? (
+                          <Slider {...sliderSettings}>
+                            {product.images.map((image, index) => (
+                              <img key={index} src={image} alt={name} />
+                            ))}
+                          </Slider>
+                        ) : (
+                          <img src={product.images[0]} alt={name} />
+                        )}
+                      </div>
+                      <div className="product-catalog-card-content">
+                        <h3>{name}</h3>
+                        {/* Variations */}
+                        {variations.length > 0 && (
+                          <h4>{variations.join(', ')}</h4>
+                        )}
+                        {/* Truncated Description */}
+                        <p>{truncateDescription(description, 20)}</p>
+                        {product.colors && product.colors.length > 0 && (
+                          <div className='product-card-colors-spacing'>
+                            <div className="product-card-colors">
+                              {product.colors.slice(0, 4).map((color, index) => (
+                                <div
+                                  key={index}
+                                  className="color-circle"
+                                  style={{ backgroundColor: color.hex }}
+                                ></div>
+                              ))}
+                              {product.colors.length > 4 && (
+                                <div className="color-circle more-colors">+</div>
+                              )}
+                            </div>
+                          </div>
+                        )}
 
-                    <Link
-                      to={`/products/${product.slug}`} // Using product.slug for routing
-                      className="btn btn-secondary"
-                    >
-                      View Details
-                    </Link>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <p>No products found.</p>
-          )}
-        </div>
-      </section>
+                        <Link
+                          to={`/products/${product.slug}`} // Using product.slug for routing
+                          className="btn btn-secondary"
+                        >
+                          View Details
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No products found.</p>
+              )}
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 };

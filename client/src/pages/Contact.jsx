@@ -5,6 +5,8 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import './../css/contact.css'; 
 import ContactForm from '../components/ContactForm';
+import Hero from './../components/Hero'
+
 
 const Contact = () => {
     const { t } = useTranslation();
@@ -31,19 +33,12 @@ const Contact = () => {
   </Helmet> 
 
   {/* Hero Section */}
-  <div
-    className="hero-container hero-container-normal hero-container-contact"
-    style={{ backgroundPositionY: `${scrollPosition * 0}px` }} // Apply parallax effect
-  >
-
-
-
-      <div className="hero-content">
-     {/* Text Section */}
-      <h1 className="hero-title"> Kontakt </h1>
-
-    </div>
-  </div>
+  <Hero
+        type="contact"
+        scrollPosition={scrollPosition}
+        title="Kontakt"
+        description="Na kontaktoni për çdo pyetje ose kërkesë."
+      />
 
 
 
