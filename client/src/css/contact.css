@@ -1,31 +1,38 @@
 /*====================  Contact Details =============================*/
 
+/* Contact Section Layout */
 .contact-section {
-    display: flex;
-    justify-content: space-between;
-    gap: 100px;
-    padding: 20px;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+  padding: 20px;
+  flex-wrap: wrap;
 }
 
-.contact-overview-title {
-    align-self: center; /* Center the title */
-    padding-top: 20px; /* Space from the top */
-    text-align: center; /* Center align text */
-    margin-bottom: 2rem; /* Add margin bottom to separate from blobs */
-  }
-  
-  .contact-overview-title h1 {
-    font-size: 2.4rem; /* Increase font size */
-    color: var(--color-secondary);
-    margin:30px;
-  }
-  
-  .contact-overview-title p {
-    color: var(--color-secondary);
-    margin: 0 15rem 0 15rem;
+/* Optional: Define styles for location and form sections */
+.location-section, .form-section {
+  flex: 1;
+  min-width: 300px;
+}
 
-  }
+/* Contact Overview Title */
+.contact-overview-title {
+  align-self: center;
+  padding-top: 20px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.contact-overview-title h1 {
+  font-size: 2.4rem;
+  color: var(--color-secondary);
+  margin: 30px;
+}
+
+.contact-overview-title p {
+  color: var(--color-secondary);
+  margin: 0 15rem;
+}
 
 .blob {
     background-color: var(--color-primary);
@@ -150,7 +157,7 @@
   
   
   .btn-submit-form {
-    width: 20%;
+    width: 30%;
     height: 40px;
     align-self: center;
     margin-top: 25px;
@@ -158,13 +165,11 @@
   }
 
 
-  /* MapSection.css */
-
+  /* Map Section Styles */
 .map-section {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .map-container {
@@ -172,27 +177,26 @@
   overflow: hidden;
   max-width: 100%;
   width: 100%;
-  max-width: 1000px; /* Adjust the max-width as needed */
-  height: 550px;
+  max-width: 1000px;
+  height: 500px;
   border: solid 5px var(--color-primary-transparent);
 }
 
 .map-container iframe {
   width: 100%;
-  height: 550px;
- 
+  height: 100%;
 }
 
-
-
-  /*====================  Tablet  =============================*/
-
-
+/* Tablet View */
 @media (max-width: 1024px) {
-    .contact-section {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .contact-section {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+  }
+  .location-section,
+  .form-section {
+      flex: 0 1 calc(50% - 20px);
+  }
     .blob {
         flex: 0 1 calc(50% - 20px);
     }
@@ -255,4 +259,44 @@
       .btn-submit-form {
         width: 100%;
     }
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .contact-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 3rem;
+      gap: 20px;
+  }
+  .location-section,
+  .form-section {
+      flex: 1 1 100%;
+  }
+
+  .contact-overview-title p {
+      margin: 0 5rem;
+  }
+
+  .contact-overview-title h1 {
+      margin: 20px;
+  }
+
+  .contact-form {
+      margin-top: 10px;
+  }
+
+  .form-group {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .services-form input,
+  .services-form textarea {
+      width: 100%;
+  }
+
+  .btn-submit-form {
+      width: 100%;
+  }
 }

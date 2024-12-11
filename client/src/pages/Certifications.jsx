@@ -125,7 +125,6 @@ const Certifications = () => {
         type="certifications"
         scrollPosition={scrollPosition}
         title="Certifikime"
-        description="Shikoni certifikatat tona të cilësisë dhe standardeve ndërkombëtare."
       />
 
 

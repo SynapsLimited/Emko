@@ -5,8 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import './../css/contact.css'; 
 import ContactForm from '../components/ContactForm';
-import Hero from './../components/Hero'
-
+import Hero from './../components/Hero';
 
 const Contact = () => {
     const { t } = useTranslation();
@@ -28,41 +27,48 @@ const Contact = () => {
 
     return (
         <div>
-              <Helmet>
-    <title>Emko - Kontakt</title>
-  </Helmet> 
+            <Helmet>
+                <title>Emko - Kontakt</title>
+            </Helmet> 
 
-  {/* Hero Section */}
-  <Hero
-        type="contact"
-        scrollPosition={scrollPosition}
-        title="Kontakt"
-        description="Na kontaktoni për çdo pyetje ose kërkesë."
-      />
+            {/* Hero Section */}
+            <Hero
+                type="contact"
+                scrollPosition={scrollPosition}
+                title="Kontakt"
+            />
 
+<div className="contact-overview-title">
+                        <h1>Plotëso formularin</h1>
+                        <p>Plotëso formularin tani dhe ne do t'ju kontaktojmë brenda 24 orëve të ardhshme!</p>
+                    </div>
 
+            {/* Container for Location and Contact Form */}
+            <div className="contact-section">
+                {/* Location Section */}
+                <div className="location-section">
 
-            <div className="contact-overview-title">
-                <h1>Vendndodhja</h1>
+                    <section data-aos="fade-up" className="map-section container">
+                        <div className="map-container">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2997.2010830856407!2d19.74154107605541!3d41.30448897131043!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDHCsDE4JzE2LjIiTiAxOcKwNDQnMzguOCJF!5e0!3m2!1sen!2s!4v1732444953746!5m2!1sen!2s" 
+                                width="auto" 
+                                height="auto" 
+                                loading="lazy" 
+                                title={t('contact.map.iframeTitle')}
+                                allowFullScreen
+                                referrerPolicy="no-referrer-when-downgrade"
+                            ></iframe>
+                        </div>
+                    </section>
+                </div>
+
+                {/* Contact Form Section */}
+                <div className="form-section">
+
+                    <ContactForm />
+                </div>
             </div>
-
-            <section data-aos="fade-up" className="map-section container">
-      <div className="map-container">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2997.2010830856407!2d19.74154107605541!3d41.30448897131043!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDHCsDE4JzE2LjIiTiAxOcKwNDQnMzguOCJF!5e0!3m2!1sen!2s!4v1732444953746!5m2!1sen!2s" 
-            width="auto" 
-            height="auto" 
-            loading="lazy" 
-            title={t('contact.map.iframeTitle')}
-        ></iframe>
-      </div>
-    </section>
-
-            <div className="contact-overview-title">
-                <h1>Plotëso formularin</h1>
-                <p>Plotëso formularin tani dhe ne do t'ju kontaktojmë brenda 24 orëve të ardhshme!</p>
-            </div>
-
-            <ContactForm />
         </div>
     );
 };

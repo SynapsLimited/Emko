@@ -33,7 +33,6 @@ const About = () => {
         type="about"
         scrollPosition={scrollPosition}
         title="Rreth Nesh"
-        description="Mësoni më shumë rreth historisë dhe vlerave tona."
       />
 
       <main className="main-group">

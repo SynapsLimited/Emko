@@ -38,7 +38,6 @@ function Products() {
         type="products"
         scrollPosition={scrollPosition}
         title="Produkte"
-        description="Shikoni koleksionin tonë të produkteve të larmishme."
       />
 
   <ProductsSection />

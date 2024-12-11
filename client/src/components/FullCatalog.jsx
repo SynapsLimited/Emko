@@ -215,7 +215,6 @@ const FullCatalog = () => {
         type="products" // Define a type that corresponds to your CSS classes
         scrollPosition={scrollPosition}
         title={lastCategoryValue}
-        description="Browse our extensive catalog of products, sorted alphabetically for your convenience."
       />
 
       {/* Category Navigation Buttons */}

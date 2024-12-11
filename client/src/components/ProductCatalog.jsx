@@ -248,7 +248,6 @@ const ProductCatalog = () => {
           type={categorySlug} // Ensure this matches your CSS class naming
           scrollPosition={scrollPosition}
           title={categoryDisplayName}
-          description={`Browse products in ${categoryDisplayName}`}
         />
       )}
 

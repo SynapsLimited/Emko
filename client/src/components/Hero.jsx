@@ -22,11 +22,6 @@ const Hero = ({ type = 'home', scrollPosition, title, description }) => {
           <h1 className="hero-content-title">
             {isHome ? 'Mirë se vini në Emko' : title || 'Category Title or Page Title'}
           </h1>
-          <p className="hero-content-description">
-            {isHome
-              ? 'Zbuloni produktet dhe projektet fantastike të Emkos që kanë revolucionarizuar tregun shqiptar!'
-              : description || 'A brief description for non-home heroes.'}
-          </p>
 
           {/* Only on home hero */}
           {isHome && (

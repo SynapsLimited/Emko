@@ -42,12 +42,12 @@ const Footer = () => {
             <div className="socials-container">
               <div className="social-row">
                 <img src={`${process.env.PUBLIC_URL}/assets/phone-call.png`} alt="Phone Number" />
-                <a href="tel:+355682099420" className="footer-link">+355 68 209 9420</a>
+                <a href="tel:+355684008000" className="footer-link">+355 68 400 8000</a>
               </div>
 
               <div className="social-row">
                 <img src={`${process.env.PUBLIC_URL}/assets/email.png`} alt="Email" />
-                <a href="mailto:infoemko@yahoo.com" className="footer-link">infoemko@yahoo.com</a>
+                <a href="mailto:emko_shpk@yahoo.com" className="footer-link">emko_shpk@yahoo.com</a>
               </div>
             </div>
           </div>

@@ -18,6 +18,7 @@
     min-width: 200px;
     margin-bottom: 20px;
     margin: 0 auto;
+    filter: invert(100%) brightness(500%);
   }
   
   

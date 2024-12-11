@@ -108,7 +108,6 @@ export default function Projects() {
         type="projects"
         scrollPosition={scrollPosition}
         title="Projekte"
-        description="Shikoni projektet tona më të reja dhe më të suksesshme."
       />
 
       <div className="container">
