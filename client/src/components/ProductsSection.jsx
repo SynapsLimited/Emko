@@ -18,118 +18,118 @@ const ProductItem = ({ link, imageSrc, title, description }) => (
 const ProductsSection = () => {
   const products = [
     {
-      link: 'products/category/Executive Chairs',
+      link: 'products/category/executive-chairs',
       imageSrc: '../assets/2023/08/office-chairfddc.png?w=512',
       title: 'Karrige Ekzekutive',
       description:
         'Rehati dhe dizajn elegant për drejtues dhe zyra të stilit modern.',
     },
     {
-      link: 'products/category/Plastic Chairs',
+      link: 'products/category/plastic-chairs',
       imageSrc: '../assets/2023/08/office-chairfddc.png?w=512',
       title: 'Karrige Plastike',
       description:
         'Praktike dhe e qëndrueshme, ideale për hapësira të brendshme dhe të jashtme.',
     },
     {
-      link: 'products/category/Waiting Chairs',
+      link: 'products/category/waiting-chairs',
       imageSrc: '../assets/2023/08/office-chairfddc.png?w=512',
       title: 'Karrige Pritëse',
       description:
         'Komoditet dhe estetikë për zona pritjeje moderne.',
     },
     {
-      link: 'products/category/Utility Chairs',
+      link: 'products/category/utility-chairs',
       imageSrc: '../assets/2023/08/office-chairfddc.png?w=512',
       title: 'Karrige Utilitare',
       description:
         'Funksionale dhe të qëndrueshme për përdorim të përditshëm.',
     },
     {
-      link: 'products/category/Amphitheater',
+      link: 'products/category/amphitheater',
       imageSrc: '../assets/2023/08/theaterfddc.png?w=512',
       title: 'Amfiteatër',
       description:
         'Opsionet e shumllojshme për amfiteatër qe EMKO ofron, me një rëndësi të theksuar tek efiçenca.',
     },
     {
-      link: 'products/category/Auditoriums',
+      link: 'products/category/auditoriums',
       imageSrc: '../assets/2023/08/classroomfddc.png?w=512',
       title: 'Auditore',
       description:
         'Duke përdorur metodat më të reja në treg, EMKO ofron produkte auditorësh të cilat përmbushin të gjitha nevojat tuaja.',
     },
     {
-      link: 'products/category/Seminar Halls',
+      link: 'products/category/seminar-halls',
       imageSrc: '../assets/2023/08/coursefddc.png?w=512',
       title: 'Salla seminarësh',
       description:
         'EMKO mundëson një gamë të gjerë karrigesh për salla seminaresh. Të pajisura me një mbështetëse krahu dhe tavolinë shkrimi.',
     },
     {
-      link: 'products/category/School Classes',
+      link: 'products/category/school-classes',
       imageSrc: '../assets/2023/08/classroom-1fddc.png?w=512',
       title: 'Klasa Shkolle',
       description:
         'EMKO ofron mobilim dhe arredim të plotë të klasave shkollore, me një koleksion të gjerë produktesh.',
     },
     {
-      link: 'products/category/Tables',
+      link: 'products/category/tables',
       imageSrc: '../assets/2023/08/tablefddc.png?w=512',
       title: 'Tavolina',
       description:
         'Prodhimet EMKO të tavolinave janë të dizenjuara për të përfshirë një rrjetë të gjërë funksionalitetesh.',
     },
     {
-      link: 'products/category/Laboratories',
+      link: 'products/category/laboratories',
       imageSrc: '../assets/2023/08/microscopefddc.png?w=512',
       title: 'Laboratorë',
       description:
         'Duke përdorur materiale me rezitencë ndaj elementëve kimik, EMKO ofron një linjë të gjerë mobilimi për laboratorë.',
     },
     {
-      link: 'products/category/Mixed',
+      link: 'products/category/mixed',
       imageSrc: '../assets/2023/08/tribunefddc.png?w=512',
       title: 'Miks',
       description:
         'EMKO ofron një sërë produktesh të shumëanshme për të përmbushur nevojat tua.',
     },
     {
-      link: 'products/category/Industrial Lines',
+      link: 'products/category/industrial-lines',
       imageSrc: '../assets/2023/08/table-1fddc.png?w=512',
       title: 'Linja Industriale',
       description: 'Kjo linjë e re nga EMKO është një risi e pakrahasueshme në treg.',
     },
     {
-      link: 'products/category/Metal Cabinets',
+      link: 'products/category/metal-cabinets',
       imageSrc: '../assets/2023/08/wardrobefddc.png?w=512',
       title: 'Dollap Metalik',
       description:
         'Duke i vënë rëndësi maksimale organizimit dhe sigurisë, EMKO ju prezanton njësitë e dollapëve metalikë.',
     },
     {
-      link: 'products/category/Metal Shelves',
+      link: 'products/category/metal-shelves',
       imageSrc: '../assets/2023/08/shelvesfddc.png?w=512',
       title: 'Skafale Metalik',
       description:
         'EMKO ofron një seri raftesh metalikë, perfekte për një organizim efikas.',
     },
     {
-      link: 'products/category/Wardrobes',
+      link: 'products/category/wardrobes',
       imageSrc: '../assets/2023/08/wardrobe-1fddc.png?w=512',
       title: 'Dollapë',
       description:
         'Për të organizuar hapësiren tuaj, EMKO ofron një sërë modelesh për dollapë, të dizenjuar per efiçencë maksimale.',
     },
     {
-      link: 'products/category/Sofas',
+      link: 'products/category/sofas',
       imageSrc: '../assets/2023/08/couchfddc.png?w=512',
       title: 'Kolltuqe',
       description:
         'Duke i përkushtuar rëndësi të madhe cilësisë dhe estetikës, EMKO prezanton ne treg linjen tonë të kolltuqeve, të krijuara për komfort maksimal.',
     },
     {
-      link: 'products/category/Stadiums',
+      link: 'products/category/stadiums',
       imageSrc: '../assets/2023/08/stadiumfddc.png?w=512',
       title: 'Stadiume',
       description:
