@@ -297,6 +297,9 @@
   .hero-container {
     min-height: 80vh; /* Maintains consistency across all heroes */
     padding: 10px;
+    width: 100%;
+    background-size: cover;
+  background-attachment: scroll;
   }
 
   .hero-content-title {
