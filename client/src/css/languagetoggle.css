@@ -1,0 +1,50 @@
+/* src/css/languagetoggle.css */
+
+.language-toggle-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .separator {
+    width: 1px; /* Thin vertical line */
+    height: 1.5rem; /* Height matching the button */
+    background-color: #D1D5DB; /* bg-gray-300 */
+    margin-right: 1rem; /* Space between separator and buttons */
+  }
+  
+  .language-toggle {
+    display: flex;
+    align-items: center;
+  }
+  
+  .language-button {
+    position: relative;
+    padding: 0.25rem 0.75rem; /* Padding similar to nav links */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: bold; /* Bold text */
+    color: #1D4ED8; /* text-primary */
+    transition: color 0.3s, background-color 0.3s;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .language-button:hover {
+    color: #9333EA; /* text-secondary on hover */
+  }
+  
+  .language-button.active {
+    color: #fff; /* White text when active */
+  }
+  
+  .active-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #1D4ED8; /* Blue background */
+    border-radius: 50%; /* Circular background */
+    z-index: -1; /* Behind the text */
+  }
+  

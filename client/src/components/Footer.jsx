@@ -56,7 +56,7 @@ const Footer = () => {
             <div className="socials-container">
               <div className="social-row">
                 <img src={`${process.env.PUBLIC_URL}/assets/whatsapp.png`} alt="Whatsapp" />
-                <a href="" className="footer-link">WhatsApp</a>
+                <a href="https://wa.link/sb1x1e" className="footer-link">WhatsApp</a>
               </div>
               <div className="social-row">
                 <img src={`${process.env.PUBLIC_URL}/assets/instagram.png`} alt="Instagram" />

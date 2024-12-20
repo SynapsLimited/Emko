@@ -1,0 +1,18 @@
+/* src/css/navlinks.css */
+
+.nav-link {
+  margin-left: 1rem; /* Spacing between links */
+  font-weight: bold; /* Bold text */
+  color: #1D4ED8; /* Primary color */
+  transition: color 0.3s;
+  text-decoration: none; /* Remove underline */
+  font-size: 1rem;
+}
+
+.nav-link:first-child {
+  margin-left: 0; /* Remove left margin for the first link */
+}
+
+.nav-link:hover {
+  color: #9333EA; /* Secondary color */
+}

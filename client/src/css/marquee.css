@@ -1,0 +1,29 @@
+/* src/css/marquee.css */
+
+.marquee-container {
+    display: flex;
+    width: 200%;
+    animation: marquee 30s linear infinite;
+  }
+  
+  .marquee-content {
+    display: flex;
+    width: 50%;
+    justify-content: space-around;
+  }
+  
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .marquee-section {
+    background-color: #2563EB; /* Adjust as needed */
+    color: #fff;
+    overflow: hidden;
+  }
+  

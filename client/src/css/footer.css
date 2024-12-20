@@ -89,7 +89,7 @@
   }
   
   .footer-copy-designed-by-synaps:hover {
-    color: blue;
+    color: var(--color-primary);
   }
   
 

@@ -8,13 +8,14 @@
   background-size: cover; /* Ensures the image covers the entire section */
   background-attachment: fixed; /* Fixes the background to create a parallax effect */
   background-position: center; /* Centers the background image */
-  min-height: 80vh; /* Sets the minimum height */
+  min-height: 90vh; /* Sets the minimum height */
   display: flex; /* Enables Flexbox for centering content */
   flex-direction: column; /* Stacks children vertically */
   justify-content: center; /* Centers children vertically */
   align-items: center; /* Centers children horizontally */
   text-align: center; /* Centers text */
   padding: 20px; /* Adds inner spacing */
+  margin-top: 10vh ;
   isolation: isolate; /* Required for mix-blend-mode to work properly */
   overflow: hidden; /* Ensures overlay covers the container */
 }
@@ -29,7 +30,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(9, 23, 174, 0.75); /* Dark blue overlay with transparency */
+  background: rgba(24, 95, 149, 0.6); /* Dark blue overlay with transparency */
   mix-blend-mode: multiply; /* Blends the overlay to darken the background image */
   z-index: 1;
   pointer-events: none; /* Ensures the overlay doesn’t interfere with interactions */
@@ -291,11 +292,11 @@
 
 @media screen and (max-width: 768px) {
   .hero-wrapper {
-    min-height: 60vh;
+    min-height: 90vh;
   }
 
   .hero-container {
-    min-height: 80vh; /* Maintains consistency across all heroes */
+    min-height: 90vh; /* Maintains consistency across all heroes */
     padding: 10px;
     width: 100%;
     background-size: cover;

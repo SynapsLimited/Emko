@@ -20,7 +20,7 @@ import CookieConsent from './components/CookieConsent';
 import PrivacyPolicy from './pages/PrivacyPolicy'; // Ensure this page exists
 
 
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar.tsx';
 import Footer from './components/Footer';
 import FixedMenu from './components/FixedMenu';
 import UserProvider, { UserContext } from './context/userContext';

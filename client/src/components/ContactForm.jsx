@@ -79,14 +79,6 @@ const ContactForm = () => {
         </div>
         <div className="form-group">
           <input
-            type="text"
-            name="country"
-            placeholder="Country"
-            value={formData.country}
-            onChange={handleChange}
-            required
-          />
-          <input
             type="email"
             name="email"
             placeholder="Email Address"
@@ -94,9 +86,8 @@ const ContactForm = () => {
             onChange={handleChange}
             required
           />
-        </div>
-        <div className="form-group">
-          <input
+
+<input
             type="text"
             name="phoneNumber"
             placeholder="Phone Number"
@@ -104,14 +95,8 @@ const ContactForm = () => {
             onChange={handleChange}
             required
           />
-          <input
-            type="text"
-            name="companyName"
-            placeholder="Company Name"
-            value={formData.companyName}
-            onChange={handleChange}
-          />
         </div>
+
         <textarea
           name="message"
           placeholder="Your Message"
