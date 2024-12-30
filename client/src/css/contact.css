@@ -4,7 +4,7 @@
 .contact-section {
   display: flex;
   justify-content: space-between;
-  gap: 100px;
+  gap: 0px;
   padding: 20px;
   flex-wrap: wrap;
 }
@@ -219,55 +219,12 @@
 
 /*====================  Mobile  =============================*/
 
-
-@media (max-width: 768px) {
-    .contact-section {
-        display: grid;
-        grid-template-columns: 1fr;
-        padding: 3rem;
-        gap: 20px;
-    }
-    .blob {
-        flex: 1 1 100%;
-    }
-
-    .contact-overview-title p {
-        color: var(--color-secondary);
-        margin: 0 5rem 0 5rem;
-    
-      }
-
-      .contact-overview-title h1 {
-        margin: 20px;
-      }
-
-      .contact-form {
-        margin-top: 10px;
-      }
-
-      .form-group {
-        flex-direction: column; /* Stack form groups vertically on small screens */
-        gap: 10px; /* Reduce gap on smaller screens */
-  
-      }
-    
-      .services-form input,
-      .services-form textarea {
-        width: 100%; /* Full width on smaller screens */
-      }
-    
-      .btn-submit-form {
-        width: 100%;
-    }
-}
-
-/* Mobile View */
 @media (max-width: 768px) {
   .contact-section {
       display: grid;
       grid-template-columns: 1fr;
-      padding: 3rem;
-      gap: 20px;
+      padding: 1rem;
+      gap: 0px;
   }
   .location-section,
   .form-section {

@@ -1,4 +1,4 @@
-// routes/productRoutes.js
+// server/routes/productRoutes.js
 
 const { Router } = require('express');
 const {
@@ -9,10 +9,12 @@ const {
   editProduct,
   deleteProduct,
 } = require('../controllers/productControllers');
+
 const authMiddleware = require('../middleware/authMiddleware');
 const multer = require('multer');
 const storage = multer.memoryStorage(); // Store files in memory for Vercel Blob
 const upload = multer({ storage });
+
 const router = Router();
 
 // Routes

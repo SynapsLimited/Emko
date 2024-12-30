@@ -1,43 +1,29 @@
-// models/productModel.js
+// server/models/productModel.js
 
 const { Schema, model } = require('mongoose');
 const slugify = require('slugify');
 
-// Define the color schema
 const colorSchema = new Schema({
   name: { type: String, required: true },
   nameEn: { type: String },
   hex: { type: String, required: true },
 });
 
-// Define the product schema
 const productSchema = new Schema(
   {
     name: { type: String, required: true },
     name_en: { type: String },
     category: {
       type: String,
-      enum: [
-        'Executive Chairs',
-        'Plastic Chairs',
-        'Waiting Chairs',
-        'Utility Chairs',
-        'Amphitheater',
-        'Auditoriums',
-        'Seminar Halls',
-        'School Classes',
-        'Tables',
-        'Laboratories',
-        'Mixed',
-        'Industrial Lines',
-        'Metal Cabinets',
-        'Metal Shelves',
-        'Wardrobes',
-        'Sofas',
-        'Stadiums',
-      ],
+      enum: ['chairs', 'tables', 'industrial-lines', 'school', 'amphitheater', 'sofas', 'mixed'],
       required: true,
-      message: '{VALUE} is not supported',
+      message: '{VALUE} is not a supported category.',
+    },
+    subcategory: {
+      type: String,
+      enum: ['executive-chairs', 'operative-chairs', 'waiting-chairs', 'executive-tables', 'operative-tables', 'meeting-tables'],
+      required: false,
+      message: '{VALUE} is not a supported subcategory.',
     },
     description: { type: String, required: true },
     description_en: { type: String },
@@ -47,7 +33,7 @@ const productSchema = new Schema(
     variations_en: [{ type: String }],
     slug: { type: String, required: true, unique: true },
     previousSlugs: [{ type: String }],
-    colors: [colorSchema], // Add the colors field
+    colors: [colorSchema], // Colors array
   },
   { timestamps: true }
 );

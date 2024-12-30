@@ -1,9 +1,10 @@
+// src/App.js
+
 import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  matchPath,
   useLocation,
 } from 'react-router-dom';
 
@@ -15,20 +16,17 @@ import './i18n/i18n'; // Import i18n configuration
 import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 
-
 import CookieConsent from './components/CookieConsent';
 import PrivacyPolicy from './pages/PrivacyPolicy'; // Ensure this page exists
 
-
-import Navbar from './components/Navbar.tsx';
+import Navbar from './components/Navbar'; // Removed .tsx extension
 import Footer from './components/Footer';
 import FixedMenu from './components/FixedMenu';
 import UserProvider, { UserContext } from './context/userContext';
 import LoadingScreen from './components/LoadingScreen';
 
-
 import Home from './pages/Home';
-import About from './pages/About'
+import About from './pages/About';
 import Products from './pages/Products';
 import Projects from './pages/Projects';
 import Certifications from './pages/Certifications';
@@ -45,10 +43,7 @@ import UserProfile from './users/UserProfile';
 import Logout from './users/Logout';
 
 // Product components
-import ProductCatalog from './components/ProductCatalog';
-import FullCatalog from './components/FullCatalog';
-import DownloadCatalog from './components/DownloadCatalog';
-
+import ProductCatalog from './products/ProductCatalog';
 
 // Product pages
 import ProductDashboard from './products/ProductDashboard';
@@ -57,8 +52,7 @@ import DeleteProduct from './products/DeleteProduct';
 import EditProduct from './products/EditProduct';
 import ProductDetail from './products/ProductDetail';
 
-
-// Product pages
+// Project pages
 import ProjectDashboard from './projects/ProjectDashboard';
 import CreateProject from './projects/CreateProject';
 import DeleteProject from './projects/DeleteProject';
@@ -128,66 +122,58 @@ function App() {
             <Navbar />
             <FixedMenu /> 
 
-          
             <CookieConsent />
 
-              {/* Technical Routes */}
-              <ScrollToTop />
-              <Layout>
-                <div className="content">
-                  <Routes>
+            {/* Technical Routes */}
+            <ScrollToTop />
+            <Layout>
+              <div className="content">
+                <Routes>
 
-                    {/* Main Routes */}
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/products" element={<Products />} />
-                    <Route path="/projects" element={<Projects />} />
-                    <Route path="/certifications" element={<Certifications />} />
-                    <Route path="/contact" element={<Contact />} />
+                  {/* Main Routes */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/certifications" element={<Certifications />} />
+                  <Route path="/contact" element={<Contact />} />
 
-                    {/* User Routes */}
-                    <Route path="register" element={<Register />} />
-                    <Route path="login" element={<Login />} />
-                    <Route path="profile/:id" element={<UserProfile />} />
-                    <Route path="logout" element={<Logout />} />
+                  {/* User Routes */}
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/profile/:id" element={<UserProfile />} />
+                  <Route path="/logout" element={<Logout />} />
 
-                    {/* Product Routes */}
-                    <Route path="/products/category/:category" element={<ProductCatalog />} />
-                    <Route path="/download-catalog/:category" element={<DownloadCatalog />} />
-                    <Route path="/download-catalog" element={<DownloadCatalog />} />
-                    <Route path="/full-catalog" element={<FullCatalog />} />
-                    <Route path="/products-dashboard" element={<ProductDashboard />} />
-                    <Route path="/create-product" element={<CreateProduct />} />
-                    <Route path="/products/:slug/delete" element={<DeleteProduct />} />
-                    <Route path="/products/:slug/edit" element={<EditProduct />} />
-                    <Route path="/products/:slug" element={<ProductDetail />} />
+                  {/* Product Routes */}
+                  <Route path="/products/category/:category" element={<ProductCatalog />} />
+                  <Route path="/products/category/:category/subcategory/:subcategory" element={<ProductCatalog />} />
+                  <Route path="/products-dashboard" element={<ProductDashboard />} />
+                  <Route path="/create-product" element={<CreateProduct />} />
+                  <Route path="/products/:slug/delete" element={<DeleteProduct />} />
+                  <Route path="/products/:slug/edit" element={<EditProduct />} />
+                  <Route path="/products/:slug" element={<ProductDetail />} />
 
+                  {/* Project Routes */}
+                  <Route path="/projects-dashboard" element={<ProjectDashboard />} />
+                  <Route path="/create-project" element={<CreateProject />} />
+                  <Route path="/projects/:slug/delete" element={<DeleteProject />} />
+                  <Route path="/projects/:slug/edit" element={<EditProject />} />
 
-                    {/* Project Routes */}
-                    <Route path="/projects-dashboard" element={<ProjectDashboard />} />
-                    <Route path="/create-project" element={<CreateProject />} />
-                    <Route path="/projects/:slug/delete" element={<DeleteProject />} />
-                    <Route path="/projects/:slug/edit" element={<EditProject />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="*" element={<ErrorPage />} />
 
+                </Routes>
 
-
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                    <Route path="*" element={<ErrorPage />} />
-
-                  </Routes>
-                
-
-                  <ToastContainer />
-                </div>
-                <Footer />
-              </Layout>
+                <ToastContainer />
+              </div>
+              <Footer />
+            </Layout>
           </>
         )}
       </UserContext.Consumer>
     </HelmetProvider>
   );
 }
-
 
 export default function AppWrapper() {
   return (
@@ -197,5 +183,4 @@ export default function AppWrapper() {
       </UserProvider>
     </Router>
   );
-
 }

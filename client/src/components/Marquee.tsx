@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Facebook, Instagram, PhoneIcon as WhatsApp } from 
 
 export default function Marquee() {
   return (
-    <div className="bg-secondary-transparent backdrop-blur-sm text-white font-bold py-1  overflow-hidden">
+    <div className="bg-primary backdrop-blur-sm text-white font-bold py-1  overflow-hidden">
       <motion.div 
         className="flex whitespace-nowrap justify-end md:justify-end"
         

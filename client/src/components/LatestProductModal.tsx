@@ -155,7 +155,7 @@ const LatestProductModal: React.FC<LatestProductModalProps> = ({ isOpen, onClose
                         )}
                         <Link
                           to={`/products/${product.slug}`}
-                          className="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors duration-300"
+                          className="block w-full text-center bg-primary hover:bg-primary text-white font-semibold py-2 px-4 rounded transition-colors duration-300"
                         >
                           View Details
                         </Link>

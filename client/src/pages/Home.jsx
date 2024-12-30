@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import './../css/home.css';
 import StatsSection from '../components/StatsSection';
-import ProductsSection from '../components/ProductsSection';
+import ProductsSection from '../components/ProductsSection.jsx';
 import { Helmet } from 'react-helmet-async';
 import Hero from '../components/Hero'; // Import the updated Hero component
 

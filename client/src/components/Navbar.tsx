@@ -4,8 +4,8 @@ import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Bell, Search } from 'lucide-react';
-import LatestProductModal from './LatestProductModal.tsx';
-import Marquee from './Marquee.tsx';
+import LatestProductModal from 'components/LatestProductModal';
+import Marquee from 'components/Marquee';
 import { useTranslation } from 'react-i18next';
 
 // Define the Product interface
@@ -24,7 +24,7 @@ interface Product {
   description: string;
   description_en?: string;
   colors?: Color[];
-  createdAt: string; // Ensure this field exists and is properly formatted
+  createdAt: string;
 }
 
 export default function Navbar() {
@@ -39,8 +39,8 @@ export default function Navbar() {
   const [suggestions, setSuggestions] = useState<{ product: Product; displayText: string }[]>([]);
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
-  const { i18n } = useTranslation();
-  const currentLang = i18n.language || 'en';
+  const { i18n, t } = useTranslation();
+  const currentLang = i18n.language || 'sq'; // Default to 'sq' if undefined
   const navigate = useNavigate();
 
   // Variants for NavLinks staggered fade-in
@@ -136,14 +136,6 @@ export default function Navbar() {
     setSuggestions(matchedSuggestions);
   }, [query, allProducts, currentLang]);
 
-  // Debugging: Log fetched products and suggestions
-  useEffect(() => {
-  }, [allProducts]);
-
-  useEffect(() => {
-
-  }, [query, suggestions]);
-
   // Helper function to normalize text
   const normalizeText = (text: string): string => {
     return text.toLowerCase().replace(/ç/g, 'c').replace(/ë/g, 'e');
@@ -190,19 +182,20 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* Top Navbar */}
       <div
-        className={`bg-secondary text-white py-2 px-4 transition-all duration-300 ${
-          isScrolled ? 'opacity-0 h-0 overflow-hidden -mb-[20px]' : 'opacity-100'
+        className={`bg-primary text-white py-1 px-4 transition-all duration-300 ${
+          isScrolled ? 'opacity-0 h-0 overflow-hidden -mb-[10px]' : 'opacity-100'
         }`}
       >
-        <div className="container mx-auto flex items-center justify-end">
-          <div className="flex items-center space-x-2 sm:space-x-4 relative">
-            {/* Integrated Search Bar */}
-            <div className="search-bar-container flex relative w-32 sm:w-auto">
-              <Search className="search-icon absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-              <input
+<div className="container mx-auto flex items-center justify-end">
+  <div className="flex items-center space-x-2 sm:space-x-4 relative">
+    {/* Integrated Search Bar */}
+    <div className="search-bar-container flex relative w-32 sm:w-auto h-5 lg:h-5">
+      <Search className="search-icon absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={12} />
+      <input
                 type="search"
-                placeholder={currentLanguage === 'en' ? "Search..." : "Kërko..."}
-                className="search-input w-full py-1 px-3 pl-8 pr-8 rounded-full text-black text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder={currentLang === 'en' ? "Search..." : "Kërko..."}
+                className="search-input w-full py-1 px-3 pl-8 pr-8 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-primary"
+                style={{ fontSize: '10px' }}
                 value={query}
                 onChange={handleInputChange}
                 onFocus={handleFocus}
@@ -210,7 +203,7 @@ export default function Navbar() {
                 onKeyDown={handleKeyDown}
               />
               {showSuggestions && suggestions.length > 0 && (
-                <div className="suggestions-container absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg  shadow-lg z-50">
+                <div className="suggestions-container absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg z-50">
                   <ul>
                     {suggestions.map((suggestion, index) => (
                       <li
@@ -319,7 +312,7 @@ export default function Navbar() {
                         className="text-secondary hover:text-primary font-bold text-lg"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        {link.name}
+                        {t(link.name)}
                       </Link>
                     </motion.div>
                   ))}
@@ -353,6 +346,7 @@ const NavLinkItems = [
 ];
 
 function NavLinks() {
+  const { t } = useTranslation();
   return (
     <>
       {NavLinkItems.map((link) => (
@@ -361,7 +355,7 @@ function NavLinks() {
           to={link.to}
           className="text-secondary hover:text-primary font-bold transition-colors"
         >
-          {link.name}
+          {t(link.name)}
         </Link>
       ))}
     </>
@@ -377,17 +371,19 @@ function LanguageToggle({
   toggleLanguage: (lang: string) => void;
   mobile?: boolean;
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className={`flex p-[10px] space-x-2 ${mobile ? 'flex-col items-center' : 'flex-row'}`}>
       <div className="relative flex items-center">
         <motion.button
-          onClick={() => toggleLanguage('AL')}
+          onClick={() => toggleLanguage('SQ')}
           className={`w-10 h-10 flex items-center justify-center rounded-full border-2 border-primary transition-colors relative
-            ${currentLanguage === 'AL' ? 'bg-primary text-white' : 'bg-transparent text-primary'}
+            ${currentLanguage === 'SQ' ? 'bg-primary text-white' : 'bg-transparent text-primary'}
           `}
           whileTap={{ scale: 0.9 }}
         >
-          AL
+          SQ
         </motion.button>
       </div>
       {mobile && (

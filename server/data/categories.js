@@ -1,19 +1,4 @@
-// client/src/data/categories.js
-
-import { 
-  RockingChair as ChairIcon, 
-  Table as TableIcon, 
-  Factory as FactoryIcon, 
-  GraduationCap as GraduationCapIcon, 
-  Users as UsersIcon, 
-  Sofa as SofaIcon, 
-  Package as PackageIcon, 
-  Flag as FlagIcon,
-  Microscope as MicroscopeIcon,
-  List as ShelfIcon, // Changed to 'List' which exists in lucide-react
-  Volleyball as StadiumIcon,
-  Archive as ArchiveIcon,
-} from 'lucide-react';
+// server/data/categories.js
 
 const categories = [
   {
@@ -22,9 +7,8 @@ const categories = [
       sq: 'Karrige',
       en: 'Chairs',
     },
-    icon: ChairIcon,
     description: {
-      sq: 'Rehati dhe ergonomik për zgjidhje të ndryshme të uljes.',
+      sq: 'Rehati dhe efikasitet për zgjidhje të ndryshme të akomodimit.',
       en: 'Comfortable and ergonomic seating solutions for various settings.',
     },
     imageSrc: '/assets/2023/08/office-chairfddc.png',
@@ -70,7 +54,6 @@ const categories = [
       sq: 'Tavolina',
       en: 'Tables',
     },
-    icon: TableIcon,
     description: {
       sq: 'Funksionale dhe elegante për qëllime të ndryshme.',
       en: 'Functional and stylish tables for different purposes.',
@@ -118,7 +101,6 @@ const categories = [
       sq: 'Linja Industriale',
       en: 'Industrial Lines',
     },
-    icon: FactoryIcon,
     description: {
       sq: 'Zgjidhje të qëndrueshme për mjedise industriale.',
       en: 'Durable furniture solutions for industrial environments.',
@@ -177,7 +159,6 @@ const categories = [
       sq: 'Shkollë',
       en: 'School',
     },
-    icon: GraduationCapIcon,
     description: {
       sq: 'Mobilim i dizajnuar për institucione arsimore.',
       en: 'Furniture designed for educational institutions.',
@@ -214,7 +195,6 @@ const categories = [
       sq: 'Amfiteatër',
       en: 'Amphitheater',
     },
-    icon: UsersIcon,
     description: {
       sq: 'Zgjidhje akomoduese për grumbullime të mëdha dhe prezantime.',
       en: 'Seating solutions for large gatherings and presentations.',
@@ -251,7 +231,6 @@ const categories = [
       sq: 'Kolltuqe',
       en: 'Sofas',
     },
-    icon: SofaIcon,
     description: {
       sq: 'Kolltuqe komode dhe stile për ambiente të ndryshme.',
       en: 'Comfortable and stylish sofas for various settings.',
@@ -265,7 +244,6 @@ const categories = [
       sq: 'Miks',
       en: 'Mixed',
     },
-    icon: PackageIcon,
     description: {
       sq: 'Mobilim dhe aksesorë të ndryshëm për nevoja të shumëanshme.',
       en: 'Assorted furniture and accessories for diverse needs.',
@@ -309,4 +287,4 @@ const categories = [
   },
 ];
 
-export default categories;
+module.exports = categories;

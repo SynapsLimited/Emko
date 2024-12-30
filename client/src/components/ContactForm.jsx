@@ -58,7 +58,7 @@ const ContactForm = () => {
 
   return (
     <section data-aos="fade-up" className="container contact-form-section">
-      <form className="container contact-form" onSubmit={handleSubmit}>
+      <form className=" contact-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <input
             type="text"
@@ -105,7 +105,7 @@ const ContactForm = () => {
           required
         />
         <button type="submit" className="btn btn-primary btn-submit">
-          Send Message
+          Send
         </button>
       </form>
     </section>

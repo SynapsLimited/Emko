@@ -48,7 +48,7 @@ const Contact = () => {
                 {/* Location Section */}
                 <div className="location-section">
 
-                    <section data-aos="fade-up" className="map-section container">
+                    <section data-aos="fade-up" className="map-section">
                         <div className="map-container">
                             <iframe 
                                 src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2997.2010830856407!2d19.74154107605541!3d41.30448897131043!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDHCsDE4JzE2LjIiTiAxOcKwNDQnMzguOCJF!5e0!3m2!1sen!2s!4v1732444953746!5m2!1sen!2s" 

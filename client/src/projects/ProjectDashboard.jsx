@@ -1,5 +1,3 @@
-// src/components/ProjectDashboard.jsx
-
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
@@ -59,42 +57,88 @@ const ProjectDashboard = () => {
   };
 
   return (
-    <section data-aos="fade-up" className="dashboard">
-      <div className="blog-title-filtered">
-        <h1>Project Dashboard</h1>
-      </div>
-
-      {projects.length ? (
-        <div className="container dashboard-container">
-          {projects.map(project => (
-            <article key={project.slug} className="dashboard-post">
-              <div className="dashboard-post-info">
-                <div className="dashboard-post-thumbnail">
-                  {project.images && project.images.length > 0 ? (
-                    <img src={project.images[0]} alt={project.name} />
-                  ) : (
-                    <p>No image available</p>
-                  )}
-                </div>
-                <h4>{project.name}</h4>
-              </div>
-              <div className="dashboard-post-actions">
-                <Link to={`/projects`} className="btn btn-primary">
-                  View
-                </Link>
-                <Link to={`/projects/${project.slug}/edit`} className="btn btn-primary">
-                  Edit
-                </Link>
-                <DeleteProject slug={project.slug} onDelete={handleDeleteProject} />
-              </div>
-            </article>
-          ))}
+    <section className="bg-gray-100 min-h-screen py-12 px-4 sm:px-6 lg:px-8 mt-[10rem]">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+            Project Dashboard
+          </h1>
+          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl">
+            Manage and view all your projects in one place
+          </p>
         </div>
-      ) : (
-        <h2 className="center">No projects found.</h2>
-      )}
+
+        <div className="mb-8 text-right">
+          <Link
+            to="/create-project"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Create New Project
+          </Link>
+        </div>
+
+        {projects.length ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map(project => (
+              <div key={project.slug} className="bg-white overflow-hidden shadow rounded-lg">
+                <div className="p-5">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      {project.images && project.images.length > 0 ? (
+                        <img className="h-12 w-12 rounded-full" src={project.images[0]} alt={project.name} />
+                      ) : (
+                        <div className="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center">
+                          <span className="text-gray-500 font-medium">No Image</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="ml-5 w-0 flex-1">
+                      <dl>
+                        <dt className="text-sm font-medium text-gray-500 truncate">{project.name}</dt>
+                        <dd>
+                          <div className="text-lg font-medium text-gray-900">{project.description}</div>
+                        </dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gray-50 px-5 py-3">
+                  <div className="text-sm">
+                    <Link to={`/projects`} className="font-medium text-indigo-600 hover:text-indigo-500">
+                      View
+                    </Link>
+                  </div>
+                </div>
+                <div className="bg-gray-50 px-5 py-3 flex justify-between">
+                  <Link
+                    to={`/projects/${project.slug}/edit`}
+                    className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Edit
+                  </Link>
+                  <DeleteProject slug={project.slug} onDelete={handleDeleteProject} />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center">
+            <h2 className="mt-2 text-lg font-medium text-gray-900">No projects found.</h2>
+            <p className="mt-1 text-sm text-gray-500">Get started by creating a new project.</p>
+            <div className="mt-6">
+              <Link
+                to="/create-project"
+                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Create New Project
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   );
 };
 
 export default ProjectDashboard;
+

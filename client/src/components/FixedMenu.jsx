@@ -84,7 +84,7 @@ const FixedMenu = () => {
         {
           icon: <ShoppingBag className="submenu-icon" />,
           label: 'All Products',
-          link: `/full-catalog`,
+          link: `/products/category/all`,
         },
         {
           icon: <PlusCircle className="submenu-icon" />,

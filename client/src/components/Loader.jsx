@@ -1,15 +1,17 @@
 import React from "react";
-import LoadingGif from '../assets/loading.gif'
+import { TailSpin } from 'react-loader-spinner';
 
 const Loader = () => {
-    return (
-        <div className="loader">
-            <div className="loader-image">
-                <img src={LoadingGif} alt="" />
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <TailSpin
+        height={80}
+        width={80}
+        color="#1DA1F2"
+        ariaLabel="loading"
+      />
+    </div>
+  );
+};
 
-
-export default Loader
+export default Loader;

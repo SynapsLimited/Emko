@@ -1,4 +1,4 @@
-// controllers/productControllers.js
+// server/controllers/productControllers.js
 
 const Product = require('../models/productModel');
 const User = require('../models/userModel');
@@ -6,27 +6,25 @@ const HttpError = require('../models/errorModel');
 const { put } = require('@vercel/blob');
 const fetch = require('node-fetch');
 
-// Utility functions to upload and delete images from Vercel Blob storage
+// Utility function to upload images to Vercel Blob
 const uploadToVercelBlob = async (fileBuffer, fileName) => {
   try {
-    // Upload the file buffer to Vercel Blob storage
     const { url } = await put(fileName, fileBuffer, {
-      access: 'public', // Ensure the file is publicly accessible
-      token: process.env.BLOB_READ_WRITE_TOKEN, // Token with read/write access
+      access: 'public',
+      token: process.env.BLOB_READ_WRITE_TOKEN,
       headers: {
-        Authorization: `Bearer ${process.env.VERCEL_ACCESS_TOKEN}`, // Add Vercel API token
+        Authorization: `Bearer ${process.env.VERCEL_ACCESS_TOKEN}`,
       },
     });
-
-    // Log the success and return the URL
     console.log('Uploaded successfully to Vercel Blob: ', url);
-    return url; // Return the public URL of the uploaded file
+    return url;
   } catch (error) {
     console.error('Error uploading file to Vercel Blob:', error);
     throw new Error('Failed to upload file to Vercel Blob');
   }
 };
 
+// Utility function to delete images from Vercel Blob
 const deleteFromVercelBlob = async (fileUrl) => {
   try {
     if (!fileUrl) {
@@ -38,7 +36,7 @@ const deleteFromVercelBlob = async (fileUrl) => {
     const response = await fetch(`https://api.vercel.com/v2/blob/files/${fileName}`, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${process.env.VERCEL_ACCESS_TOKEN}`, // Vercel API token for authorization
+        Authorization: `Bearer ${process.env.VERCEL_ACCESS_TOKEN}`,
       },
     });
 
@@ -57,38 +55,16 @@ const deleteFromVercelBlob = async (fileUrl) => {
 // PROTECTED
 const createProduct = async (req, res, next) => {
   try {
-    const {
-      name,
-      name_en,
-      category,
-      description,
-      description_en,
-      variations,
-      variations_en,
-      colors, // Add colors here
-    } = req.body;
+    const { name, name_en, category, description, description_en, variations, variations_en } = req.body;
 
+    // Validate required fields
     if (!name || !category || !description || !req.files || req.files.length === 0) {
       return next(new HttpError('Fill in all fields and upload at least one image.', 422));
     }
 
-    // Handle variations
+    // Handle variations, if provided
     const variationsArray = variations ? variations.split(',').map((v) => v.trim()) : [];
-
     const variationsEnArray = variations_en ? variations_en.split(',').map((v) => v.trim()) : [];
-
-    // Handle colors
-    let colorsArray = [];
-    if (colors) {
-      try {
-        colorsArray = JSON.parse(colors);
-        if (!Array.isArray(colorsArray)) {
-          throw new Error('Colors must be an array');
-        }
-      } catch (err) {
-        return next(new HttpError('Invalid colors format', 422));
-      }
-    }
 
     // Upload images
     const imageUrls = [];
@@ -99,7 +75,7 @@ const createProduct = async (req, res, next) => {
       imageUrls.push(imageUrl);
     }
 
-    // Save the product with the image URLs and colors
+    // Save the product with the image URLs
     const newProduct = await Product.create({
       name,
       name_en,
@@ -109,12 +85,12 @@ const createProduct = async (req, res, next) => {
       variations: variationsArray,
       variations_en: variationsEnArray,
       images: imageUrls,
-      colors: colorsArray, // Include colors in the product
       creator: req.user.id,
     });
 
     res.status(201).json(newProduct);
   } catch (error) {
+    console.error('Error creating product:', error);
     return next(new HttpError(error.message || 'Something went wrong', 500));
   }
 };
@@ -127,7 +103,8 @@ const getProducts = async (req, res, next) => {
     const products = await Product.find().sort({ updatedAt: -1 });
     res.status(200).json(products);
   } catch (error) {
-    return next(new HttpError(error));
+    console.error('Error fetching products:', error);
+    return next(new HttpError(error.message || 'Something went wrong', 500));
   }
 };
 
@@ -137,31 +114,29 @@ const getProducts = async (req, res, next) => {
 const getCategoryProducts = async (req, res, next) => {
   try {
     const { category } = req.params;
+
+    // Validate if category exists in enum
+    if (!['chairs', 'tables', 'industrial-lines', 'school', 'amphitheater', 'sofas', 'mixed'].includes(category)) {
+      return next(new HttpError('Invalid category.', 400));
+    }
+
     const categoryProducts = await Product.find({ category }).sort({ createdAt: -1 });
     res.status(200).json(categoryProducts);
   } catch (error) {
-    return next(new HttpError(error));
+    console.error('Error fetching category products:', error);
+    return next(new HttpError(error.message || 'Something went wrong', 500));
   }
 };
 
 // ======================== Edit product
-// PATCH : api/products/:id
+// PATCH : api/products/:slug/edit
 // PROTECTED
 const editProduct = async (req, res, next) => {
   try {
-    const productSlug = req.params.slug; // Update to use slug
+    const productSlug = req.params.slug;
+    const { name, name_en, category, description, description_en, variations, variations_en } = req.body;
 
-    const {
-      name,
-      name_en,
-      category,
-      description,
-      description_en,
-      variations,
-      variations_en,
-      colors, // Add colors here
-    } = req.body;
-
+    // Validate required fields
     if (!name || !category || !description) {
       return next(new HttpError('Fill in all fields.', 422));
     }
@@ -171,26 +146,19 @@ const editProduct = async (req, res, next) => {
       return next(new HttpError('Product not found.', 404));
     }
 
+    // Validate category
+    if (!['chairs', 'tables', 'industrial-lines', 'school', 'amphitheater', 'sofas', 'mixed'].includes(category)) {
+      return next(new HttpError('Invalid category.', 400));
+    }
+
     // Handle variations
     const variationsArray = variations ? variations.split(',').map((v) => v.trim()) : oldProduct.variations;
     const variationsEnArray = variations_en
       ? variations_en.split(',').map((v) => v.trim())
       : oldProduct.variations_en;
 
-    // Handle colors
-    let colorsArray = oldProduct.colors;
-    if (colors) {
-      try {
-        colorsArray = JSON.parse(colors);
-        if (!Array.isArray(colorsArray)) {
-          throw new Error('Colors must be an array');
-        }
-      } catch (err) {
-        return next(new HttpError('Invalid colors format', 422));
-      }
-    }
-
     let newImageUrls = oldProduct.images;
+
     // Check if new images were uploaded
     if (req.files && req.files.length > 0) {
       // Upload new images
@@ -201,7 +169,8 @@ const editProduct = async (req, res, next) => {
         const imageUrl = await uploadToVercelBlob(fileBuffer, fileName);
         newImageUrls.push(imageUrl);
       }
-      // Optionally delete old images from Vercel Blob storage
+
+      // Delete old images from Vercel Blob storage
       for (const imageUrl of oldProduct.images) {
         await deleteFromVercelBlob(imageUrl);
       }
@@ -215,7 +184,6 @@ const editProduct = async (req, res, next) => {
     oldProduct.description_en = description_en;
     oldProduct.variations = variationsArray;
     oldProduct.variations_en = variationsEnArray;
-    oldProduct.colors = colorsArray; // Update colors
     oldProduct.images = newImageUrls;
 
     // Save the updated product
@@ -223,13 +191,11 @@ const editProduct = async (req, res, next) => {
 
     res.status(200).json(updatedProduct);
   } catch (error) {
+    console.error('Error editing product:', error);
     return next(new HttpError(error.message || "Couldn't update product", 500));
   }
 };
 
-// ======================== Delete product
-// DELETE : api/products/:id
-// PROTECTED
 // ======================== Delete product
 // DELETE : api/products/:slug
 // PROTECTED
@@ -259,9 +225,8 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
-
 // ======================== Get single product by slug
-// GET : api/products/slug/:slug
+// GET : api/products/:slug
 // UNPROTECTED
 const getProductBySlug = async (req, res, next) => {
   try {
@@ -273,6 +238,7 @@ const getProductBySlug = async (req, res, next) => {
     }
     res.status(200).json(product);
   } catch (error) {
+    console.error('Error fetching product by slug:', error);
     return next(new HttpError('Product does not exist', 404));
   }
 };
@@ -292,13 +258,15 @@ const getProductById = async (req, res, next) => {
     // Redirect to slug-based URL
     res.redirect(301, `/products/${product.slug}`);
   } catch (error) {
+    console.error('Error fetching product by ID:', error);
     return next(new HttpError('Product does not exist', 404));
   }
 };
 
-// ======================== Get single product (updated to use slug)
+// ======================== Get single product (alias for getProductBySlug)
+// GET : api/products/:slug
+// UNPROTECTED
 const getProduct = async (req, res, next) => {
-  const { slug } = req.params;
   return getProductBySlug(req, res, next);
 };
 

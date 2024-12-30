@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import './../css/products.css';
-import ProductsSection from '../components/ProductsSection';
+import ProductsSection from '../components/ProductsSection.jsx';
 import Hero from './../components/Hero'
 
 function Products() {
