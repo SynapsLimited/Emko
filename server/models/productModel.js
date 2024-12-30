@@ -2,28 +2,35 @@
 
 const { Schema, model } = require('mongoose');
 const slugify = require('slugify');
+// const categories = require('../data/categories'); // Temporarily disable
 
+// Hardcoded categoryEnum for testing
+const categoryEnum = ['chairs', 'tables', 'industrial-lines', 'school', 'amphitheater', 'sofas', 'mixed'];
+
+// Hardcoded subcategoryEnum for testing
+const subcategoryEnum = ['executive-chairs', 'operative-chairs', 'waiting-chairs', 'executive-tables', 'operative-tables', 'meeting-tables'];
+
+// Define the color schema
 const colorSchema = new Schema({
   name: { type: String, required: true },
   nameEn: { type: String },
   hex: { type: String, required: true },
 });
 
+// Define the product schema
 const productSchema = new Schema(
   {
     name: { type: String, required: true },
     name_en: { type: String },
     category: {
       type: String,
-      enum: ['chairs', 'tables', 'industrial-lines', 'school', 'amphitheater', 'sofas', 'mixed'],
       required: true,
-      message: '{VALUE} is not a supported category.',
+      enum: categoryEnum, // Enum based on hardcoded values
     },
     subcategory: {
       type: String,
-      enum: ['executive-chairs', 'operative-chairs', 'waiting-chairs', 'executive-tables', 'operative-tables', 'meeting-tables'],
-      required: false,
-      message: '{VALUE} is not a supported subcategory.',
+      required: false, // Adjust based on requirements
+      enum: subcategoryEnum, // Enum based on hardcoded values
     },
     description: { type: String, required: true },
     description_en: { type: String },

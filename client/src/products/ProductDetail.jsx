@@ -211,7 +211,7 @@ const ProductDetail = () => {
 
               {/* Navigation Buttons */}
               <div className="mt-6 flex space-x-4 justify-center">
-                <Link to="/products">
+                <Link to="/products/category/all">
                   <button className="bg-primary text-white py-2 px-4 text-sm rounded-full hover:bg-primary-transparent transition-colors duration-300">
                     Back to Products
                   </button>

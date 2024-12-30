@@ -1,17 +1,17 @@
-// client/src/pages/CreateProduct.jsx
-
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../context/userContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import ColorSelector from './../components/ColorSelector';
+import categories from '../data/categories';
+import Select from 'react-select';
 
 const CreateProduct = () => {
   const [name, setName] = useState('');
   const [nameEn, setNameEn] = useState('');
-  const [category, setCategory] = useState('chairs'); // Default to 'chairs'
-  const [subcategory, setSubcategory] = useState('');
+  const [category, setCategory] = useState(null);
+  const [subcategory, setSubcategory] = useState(null);
   const [description, setDescription] = useState('');
   const [descriptionEn, setDescriptionEn] = useState('');
   const [variations, setVariations] = useState('');
@@ -32,48 +32,32 @@ const CreateProduct = () => {
     }
   }, [token, navigate]);
 
-  // Static category and subcategory definitions
-  const PRODUCT_CATEGORIES = [
-    {
-      value: 'chairs',
-      label: 'Chairs',
-      subcategories: ['executive-chairs', 'operative-chairs', 'waiting-chairs'],
-    },
-    {
-      value: 'tables',
-      label: 'Tables',
-      subcategories: ['executive-tables', 'operative-tables', 'meeting-tables'],
-    },
-    {
-      value: 'industrial-lines',
-      label: 'Industrial Lines',
-      subcategories: [],
-    },
-    {
-      value: 'school',
-      label: 'School',
-      subcategories: [],
-    },
-    {
-      value: 'amphitheater',
-      label: 'Amphitheater',
-      subcategories: [],
-    },
-    {
-      value: 'sofas',
-      label: 'Sofas',
-      subcategories: [],
-    },
-    {
-      value: 'mixed',
-      label: 'Mixed',
-      subcategories: [],
-    },
-  ];
+  // Prepare options for React Select
+  const categoryOptions = categories.map((cat) => ({
+    value: cat.slug,
+    label: (
+      <div className="flex items-center">
+        <cat.icon className="mr-2" />
+        <span>{cat.name.en}</span>
+      </div>
+    ),
+    data: cat, // To access subcategories
+  }));
 
-  // Get subcategories based on selected category
-  const selectedCategory = PRODUCT_CATEGORIES.find((cat) => cat.value === category);
-  const subcategoryOptions = selectedCategory?.subcategories || [];
+  const selectedCategoryData = category ? categories.find(cat => cat.slug === category.value) : null;
+
+  const subcategoryOptions = selectedCategoryData
+    ? selectedCategoryData.subcategories.map((sub) => ({
+        value: sub.slug,
+        label: (
+          <div className="flex items-center">
+            {/* Optionally, add subcategory icons if available */}
+            {/* <sub.icon className="mr-2" /> */}
+            <span>{sub.name.en}</span>
+          </div>
+        ),
+      }))
+    : [];
 
   const createProduct = async (e) => {
     e.preventDefault();
@@ -94,7 +78,7 @@ const CreateProduct = () => {
       return;
     }
 
-    if (subcategoryOptions.length > 0 && !subcategory) {
+    if (selectedCategoryData?.subcategories.length > 0 && !subcategory) {
       setError('Please select a subcategory.');
       toast.error('Please select a subcategory.');
       return;
@@ -102,9 +86,9 @@ const CreateProduct = () => {
 
     const productData = new FormData();
     productData.set('name', name);
-    productData.set('category', category);
+    productData.set('category', category.value);
     if (subcategory) {
-      productData.set('subcategory', subcategory);
+      productData.set('subcategory', subcategory.value);
     }
     productData.set('description', description);
     productData.set('variations', variations);
@@ -132,7 +116,7 @@ const CreateProduct = () => {
         withCredentials: true,
         headers: { 
           Authorization: `Bearer ${token}`, 
-          // 'Content-Type': 'multipart/form-data' // Removed to let Axios set it automatically
+          // 'Content-Type': 'multipart/form-data' // Removed this line
         },
       });
       if (response.status === 201) {
@@ -177,51 +161,37 @@ const CreateProduct = () => {
             <label htmlFor="category" className="block text-sm font-medium text-gray-700">
               Category <span className="text-red-500">*</span>
             </label>
-            <select
-              name="category"
+            <Select
               id="category"
               value={category}
-              onChange={(e) => {
-                setCategory(e.target.value);
-                setSubcategory(''); // Reset subcategory on category change
+              onChange={(selectedOption) => {
+                setCategory(selectedOption);
+                setSubcategory(null); // Reset subcategory on category change
               }}
-              className="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              options={categoryOptions}
+              className="mt-1"
+              placeholder="Select Category"
+              isSearchable
               required
-            >
-              <option value="" disabled>
-                Select Category
-              </option>
-              {PRODUCT_CATEGORIES.map((cat) => (
-                <option key={cat.value} value={cat.value}>
-                  {cat.label}
-                </option>
-              ))}
-            </select>
+            />
           </div>
 
           {/* Subcategory */}
-          {subcategoryOptions.length > 0 && (
+          {selectedCategoryData && selectedCategoryData.subcategories.length > 0 && (
             <div>
               <label htmlFor="subcategory" className="block text-sm font-medium text-gray-700">
                 Subcategory <span className="text-red-500">*</span>
               </label>
-              <select
-                name="subcategory"
+              <Select
                 id="subcategory"
                 value={subcategory}
-                onChange={(e) => setSubcategory(e.target.value)}
-                className="mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                onChange={(selectedOption) => setSubcategory(selectedOption)}
+                options={subcategoryOptions}
+                className="mt-1"
+                placeholder="Select Subcategory"
+                isSearchable
                 required
-              >
-                <option value="" disabled>
-                  Select Subcategory
-                </option>
-                {subcategoryOptions.map((sub) => (
-                  <option key={sub} value={sub}>
-                    {sub.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
           )}
 
