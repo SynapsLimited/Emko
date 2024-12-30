@@ -5,14 +5,15 @@ import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async'; // Updated import
+import { Helmet } from 'react-helmet-async';
 import Loader from '../components/Loader';
 import DeleteProduct from './DeleteProduct';
 import { UserContext } from '../context/userContext';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import './../css/products.css'; // Ensure your CSS is correctly imported
+import './../css/products.css';
+import categories from '../data/categories'; // Import categories
 
 const ProductDetail = () => {
   const { slug } = useParams(); // Extract 'slug' from URL parameters
@@ -86,6 +87,21 @@ const ProductDetail = () => {
     );
   }
 
+  // Helper functions to get category and subcategory names
+  const getCategoryName = (slug) => {
+    const category = categories.find(cat => cat.slug === slug);
+    return category ? category.name[currentLanguage] : slug;
+  };
+
+  const getSubcategoryName = (categorySlug, subcategorySlug) => {
+    const category = categories.find(cat => cat.slug === categorySlug);
+    if (category && category.subcategories) {
+      const subcategory = category.subcategories.find(sub => sub.slug === subcategorySlug);
+      return subcategory ? subcategory.name[currentLanguage] : subcategorySlug;
+    }
+    return subcategorySlug;
+  };
+
   // Determine the product name, description, and variations based on the current language
   const name =
     currentLanguage === 'en' ? product.name_en || product.name : product.name;
@@ -98,8 +114,9 @@ const ProductDetail = () => {
       ? product.variations_en || product.variations
       : product.variations;
 
-  const categoryName = product.category;
-  const subcategoryName = product.subcategory;
+  // Get category and subcategory names
+  const categoryName = getCategoryName(product.category);
+  const subcategoryName = product.subcategory ? getSubcategoryName(product.category, product.subcategory) : '';
 
   // Determine if the current user is the creator of the product
   const isCreator =
@@ -197,15 +214,15 @@ const ProductDetail = () => {
                 <div className="mb-4">
                   <span className="font-semibold text-gray-800">Available Colors:</span>
                   <div className="flex mt-2 space-x-2 justify-center">
-                {product.colors.map((color, index) => (
-                  <div
-                    key={index}
-                    className="w-6 h-6 rounded-full border border-gray-300"
-                    style={{ backgroundColor: color.hex }}
-                    title={currentLanguage === 'en' ? color.nameEn : color.name}
-                  />
-                ))}
-              </div>
+                    {product.colors.map((color, index) => (
+                      <div
+                        key={index}
+                        className="w-6 h-6 rounded-full border border-gray-300"
+                        style={{ backgroundColor: color.hex }}
+                        title={currentLanguage === 'en' ? color.nameEn : color.name}
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
 

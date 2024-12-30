@@ -1,21 +1,38 @@
 // src/components/ProductCard.js
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import categories from '../data/categories'; // Import categories
 
 const ProductCard = ({ product }) => {
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language || 'en';
 
-  // Determine the product name based on the current language
+  // Helper functions to get category and subcategory names
+  const getCategoryName = (slug) => {
+    const category = categories.find(cat => cat.slug === slug);
+    return category ? category.name[currentLanguage] : slug;
+  };
+
+  const getSubcategoryName = (categorySlug, subcategorySlug) => {
+    const category = categories.find(cat => cat.slug === categorySlug);
+    if (category && category.subcategories) {
+      const subcategory = category.subcategories.find(sub => sub.slug === subcategorySlug);
+      return subcategory ? subcategory.name[currentLanguage] : subcategorySlug;
+    }
+    return subcategorySlug;
+  };
+
+  // Determine the product name and variations based on the current language
   const name = currentLanguage === 'en' ? product.name_en || product.name : product.name;
-
-  // Determine the variations based on the current language
   const variations = currentLanguage === 'en' ? product.variations_en || product.variations : product.variations;
-
-  // Truncate variations if needed (optional)
   const truncatedVariations = variations.length > 0 ? variations.join(', ') : 'Normal';
+
+  // Get category and subcategory names
+  const categoryName = getCategoryName(product.category);
+  const subcategoryName = product.subcategory ? getSubcategoryName(product.category, product.subcategory) : '';
 
   return (
     <motion.div
@@ -43,11 +60,11 @@ const ProductCard = ({ product }) => {
         <p className="text-sm text-gray-600 mb-2">Variation: {truncatedVariations}</p>
         <div className="flex flex-wrap gap-2 mb-2">
           <button className="text-xs bg-secondary-transparent text-white rounded-full px-2 py-1">
-            {product.category}
+            {categoryName}
           </button>
-          {product.subcategory && (
+          {subcategoryName && (
             <button className="text-xs bg-green-100 text-green-800 rounded-full px-2 py-1">
-              {product.subcategory}
+              {subcategoryName}
             </button>
           )}
         </div>
@@ -61,7 +78,7 @@ const ProductCard = ({ product }) => {
               key={index}
               className="w-5 h-5 rounded-full border border-gray-300"
               style={{ backgroundColor: color.hex }}
-              title={color.name || 'Color'}
+              title={currentLanguage === 'en' ? color.nameEn : color.name}
             />
           ))}
           {product.colors && product.colors.length > 5 && (

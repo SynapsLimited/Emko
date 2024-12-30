@@ -60,17 +60,12 @@ const ProductCatalog = () => {
         let filtered = data;
 
         if (selectedCategory !== 'all-products') {
-          // Ensure that categoryTranslationMap[selectedCategory].en exists
-          const categoryNameEn = categoryTranslationMap[selectedCategory]?.en;
-          if (categoryNameEn) {
-            filtered = filtered.filter(product => product.category === categoryNameEn);
-          } else {
-            // If category translation missing, don't filter
-            console.warn(`Category translation missing for slug: ${selectedCategory}`);
-          }
+          // Filter by category slug
+          filtered = filtered.filter(product => product.category === selectedCategory);
         }
 
         if (selectedSubcategory) {
+          // Filter by subcategory slug
           filtered = filtered.filter(product => product.subcategory === selectedSubcategory);
         }
 
@@ -84,7 +79,7 @@ const ProductCatalog = () => {
     };
 
     fetchProducts();
-  }, [selectedCategory, selectedSubcategory, categoryTranslationMap]);
+  }, [selectedCategory, selectedSubcategory]);
 
   // Update filtered products based on search query
   useEffect(() => {
@@ -129,7 +124,7 @@ const ProductCatalog = () => {
           currentLanguage
         );
       } else if (catalogType === 'Category Catalog' && selectedCategory && selectedCategory !== 'all-products') {
-        const categoryProducts = products.filter(p => p.category === categoryTranslationMap[selectedCategory].en);
+        const categoryProducts = products.filter(p => p.category === selectedCategory);
         await generateFilteredPDF(
           categoryProducts,
           `${categoryTranslationMap[selectedCategory][currentLanguage].replace(/\s+/g, '_')}_Catalog`,
@@ -261,7 +256,7 @@ const ProductCatalog = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <AnimatePresence>
                 {filteredProducts.map((product, index) => (
-                  <ProductCard key={product.id ? `${product.id}-${index}` : `product-${index}`} product={product} currentLanguage={currentLanguage} />
+                  <ProductCard key={product.id ? `${product.id}-${index}` : `product-${index}`} product={product} />
                 ))}
               </AnimatePresence>
             </div>
