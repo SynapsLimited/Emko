@@ -19,6 +19,7 @@ const ProductCatalog = () => {
   const [selectedCategory, setSelectedCategory] = useState('all-products'); // Using slug
   const [selectedSubcategory, setSelectedSubcategory] = useState(''); // Using slug
   const [searchQuery, setSearchQuery] = useState('');
+  const [allProducts, setAllProducts] = useState([]); // New state for all products
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,9 +47,9 @@ const ProductCatalog = () => {
   // If a subcategory is selected, find the corresponding subcategory object
   const selectedSubcategoryData = selectedCategoryData?.subcategories.find(sub => sub.slug === selectedSubcategory);
 
-  // Fetch products from backend
+  // Fetch all products once
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchAllProducts = async () => {
       setIsLoading(true);
       try {
         const response = await fetch(`${process.env.REACT_APP_BASE_URL}/products`);
@@ -56,30 +57,32 @@ const ProductCatalog = () => {
           throw new Error(`Failed to fetch products: ${response.status} ${response.statusText}`);
         }
         const data = await response.json();
-
-        let filtered = data;
-
-        if (selectedCategory !== 'all-products') {
-          // Filter by category slug
-          filtered = filtered.filter(product => product.category === selectedCategory);
-        }
-
-        if (selectedSubcategory) {
-          // Filter by subcategory slug
-          filtered = filtered.filter(product => product.subcategory === selectedSubcategory);
-        }
-
-        setProducts(filtered);
-        setFilteredProducts(filtered);
+        setAllProducts(data);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching all products:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProducts();
-  }, [selectedCategory, selectedSubcategory]);
+    fetchAllProducts();
+  }, []);
+
+  // Filter products based on selected category and subcategory
+  useEffect(() => {
+    let filtered = allProducts;
+
+    if (selectedCategory !== 'all-products') {
+      filtered = filtered.filter(product => product.category === selectedCategory);
+    }
+
+    if (selectedSubcategory) {
+      filtered = filtered.filter(product => product.subcategory === selectedSubcategory);
+    }
+
+    setProducts(filtered);
+    setFilteredProducts(filtered);
+  }, [selectedCategory, selectedSubcategory, allProducts]);
 
   // Update filtered products based on search query
   useEffect(() => {
@@ -112,30 +115,50 @@ const ProductCatalog = () => {
     setSelectedSubcategory(subcategorySlug);
   };
 
+  // Sorting function
+  const sortProducts = (productsList) => {
+    return productsList.sort((a, b) => {
+      // Compare categories
+      if (a.category < b.category) return -1;
+      if (a.category > b.category) return 1;
+
+      // If categories are equal, compare subcategories
+      if (a.subcategory < b.subcategory) return -1;
+      if (a.subcategory > b.subcategory) return 1;
+
+      return 0;
+    });
+  };
+
   const handleGeneratePDF = async (catalogType) => {
     setIsGeneratingPDF(true);
     try {
+      let productsToGenerate = [];
+
       if (catalogType === 'Full Catalog') {
+        productsToGenerate = sortProducts([...allProducts]);
         await generatePDF(
-          products,
+          productsToGenerate,
           'Full_Catalog',
           null,
           categoryTranslationMap,
           currentLanguage
         );
       } else if (catalogType === 'Category Catalog' && selectedCategory && selectedCategory !== 'all-products') {
-        const categoryProducts = products.filter(p => p.category === selectedCategory);
+        const categoryProducts = allProducts.filter(p => p.category === selectedCategory);
+        productsToGenerate = sortProducts([...categoryProducts]);
         await generateFilteredPDF(
-          categoryProducts,
+          productsToGenerate,
           `${categoryTranslationMap[selectedCategory][currentLanguage].replace(/\s+/g, '_')}_Catalog`,
           selectedCategoryData,
           categoryTranslationMap,
           currentLanguage
         );
       } else if (catalogType === 'Subcategory Catalog' && selectedSubcategory) {
-        const subcategoryProducts = products.filter(p => p.subcategory === selectedSubcategory);
+        const subcategoryProducts = allProducts.filter(p => p.subcategory === selectedSubcategory);
+        productsToGenerate = sortProducts([...subcategoryProducts]);
         await generateFilteredPDF(
-          subcategoryProducts,
+          productsToGenerate,
           `${categoryTranslationMap[selectedSubcategory][currentLanguage].replace(/\s+/g, '_')}_Catalog`,
           selectedSubcategoryData,
           categoryTranslationMap,
@@ -158,117 +181,119 @@ const ProductCatalog = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">
-        {currentLanguage === 'en' ? 'Our Products' : 'Produktet Tona'}
-      </h1>
-      <p className="text-gray-600 mb-8">
-        {currentLanguage === 'en'
-          ? 'Explore our wide range of high-quality furniture designed for various institutional needs. From office spaces to educational environments, we have the perfect solutions to meet your requirements.'
-          : 'Eksploroni gamën tonë të gjerë të mobiljeve me cilësi të lartë, të dizajnuara për nevoja të ndryshme institucionale. Nga hapësirat e zyrave deri te ambientet arsimore, kemi zgjidhjet perfekte për t\'ju përmbushur kërkesat.'}
-      </p>
-      <div className="mb-6">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder={currentLanguage === 'en' ? 'Search products...' : 'Kërko produkte...'}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full p-2 pl-10 pr-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+    <div className='pt-[12rem]'>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-4">
+          {currentLanguage === 'en' ? 'Our Products' : 'Produktet Tona'}
+        </h1>
+        <p className="text-gray-600 mb-8">
+          {currentLanguage === 'en'
+            ? 'Explore our wide range of high-quality furniture designed for various institutional needs. From office spaces to educational environments, we have the perfect solutions to meet your requirements.'
+            : 'Eksploroni gamën tonë të gjerë të mobiljeve me cilësi të lartë, të dizajnuara për nevoja të ndryshme institucionale. Nga hapësirat e zyrave deri te ambientet arsimore, kemi zgjidhjet perfekte për t\'ju përmbushur kërkesat.'}
+        </p>
+        <div className="mb-6">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder={currentLanguage === 'en' ? 'Search products...' : 'Kërko produkte...'}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full p-2 pl-10 pr-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="md:w-1/4">
-          <CategoryPanel
-            categories={categories}
-            selectedCategory={selectedCategory}
-            selectedSubcategory={selectedSubcategory}
-            onSelectCategory={handleCategorySelect}
-            onSelectSubcategory={handleSubcategorySelect}
-            currentLanguage={currentLanguage} // Pass currentLanguage
-          />
-        </div>
-        <div className="md:w-3/4">
-          <div className="mb-4">
-            <h2 className="text-2xl font-semibold">
-              {t(categoryTranslationMap[selectedCategory] || { en: 'All Products', sq: 'Të gjitha produktet' })}
-            </h2>
-            
-            {selectedSubcategory ? (
-              <>
-                {/* Display Subcategory Name */}
-                <p className="text-gray-600">
-                  {t(categoryTranslationMap[selectedSubcategory] || { en: selectedSubcategory, sq: selectedSubcategory })}
-                </p>
-                {/* Display Subcategory Description */}
-                <p className="text-gray-600 mt-2">
-                  {selectedSubcategoryData?.description?.[currentLanguage] || ''}
-                </p>
-              </>
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="md:w-1/4">
+            <CategoryPanel
+              categories={categories}
+              selectedCategory={selectedCategory}
+              selectedSubcategory={selectedSubcategory}
+              onSelectCategory={handleCategorySelect}
+              onSelectSubcategory={handleSubcategorySelect}
+              currentLanguage={currentLanguage} // Pass currentLanguage
+            />
+          </div>
+          <div className="md:w-3/4">
+            <div className="mb-4">
+              <h2 className="text-2xl font-semibold">
+                {t(categoryTranslationMap[selectedCategory] || { en: 'All Products', sq: 'Të gjitha produktet' })}
+              </h2>
+              
+              {selectedSubcategory ? (
+                <>
+                  {/* Display Subcategory Name */}
+                  <p className="text-gray-600">
+                    {t(categoryTranslationMap[selectedSubcategory] || { en: selectedSubcategory, sq: selectedSubcategory })}
+                  </p>
+                  {/* Display Subcategory Description */}
+                  <p className="text-gray-600 mt-2">
+                    {selectedSubcategoryData?.description?.[currentLanguage] || ''}
+                  </p>
+                </>
+              ) : (
+                (selectedCategory !== 'all-products') && (
+                  /* Display Category Description */
+                  <p className="text-gray-600 mt-2">
+                    {selectedCategoryData?.description?.[currentLanguage] || ''}
+                  </p>
+                )
+              )}
+            </div>
+            <div className="mb-6 flex flex-wrap gap-4">
+              <button
+                onClick={() => handleGeneratePDF('Full Catalog')}
+                disabled={isGeneratingPDF}
+                className="flex items-center px-4 py-2 bg-primary text-white rounded-full hover:bg-primary-transparent transition-colors duration-300 disabled:opacity-50"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                {currentLanguage === 'en' ? 'Download Full Catalog' : 'Shkarko katalogun e plotë'}
+              </button>
+              {selectedCategory && selectedCategory !== 'all-products' && (
+                <button
+                  onClick={() => handleGeneratePDF('Category Catalog')}
+                  disabled={isGeneratingPDF}
+                  className="flex items-center px-4 py-2 bg-secondary text-white rounded-full hover:bg-secondary-transparent transition-colors duration-300 disabled:opacity-50"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  {currentLanguage === 'en'
+                    ? `Download ${t(categoryTranslationMap[selectedCategory])} Catalog`
+                    : `Shkarko katalogun për ${t(categoryTranslationMap[selectedCategory])}`}
+                </button>
+              )}
+              {selectedSubcategory && (
+                <button
+                  onClick={() => handleGeneratePDF('Subcategory Catalog')}
+                  disabled={isGeneratingPDF}
+                  className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-full hover:bg-gray-500 transition-colors duration-300 disabled:opacity-50"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  {currentLanguage === 'en'
+                    ? `Download ${t(categoryTranslationMap[selectedSubcategory])} Catalog`
+                    : `Shkarko katalogun për ${t(categoryTranslationMap[selectedSubcategory])}`}
+                </button>
+              )}
+            </div>
+            {isLoading ? (
+              <Loader />
+            ) : filteredProducts.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <AnimatePresence>
+                  {filteredProducts.map((product, index) => (
+                    <ProductCard key={product.id ? `${product.id}-${index}` : `product-${index}`} product={product} />
+                  ))}
+                </AnimatePresence>
+              </div>
             ) : (
-              (selectedCategory !== 'all-products') && (
-                /* Display Category Description */
-                <p className="text-gray-600 mt-2">
-                  {selectedCategoryData?.description?.[currentLanguage] || ''}
+              <div className="text-center py-12">
+                <p className="text-xl text-gray-600">
+                  {currentLanguage === 'en'
+                    ? 'No products match your search criteria.'
+                    : 'Nuk ka produkte që përputhen me kriteret e kërkimit tuaj.'}
                 </p>
-              )
+              </div>
             )}
           </div>
-          <div className="mb-6 flex flex-wrap gap-4">
-            <button
-              onClick={() => handleGeneratePDF('Full Catalog')}
-              disabled={isGeneratingPDF}
-              className="flex items-center px-4 py-2 bg-primary text-white rounded-full hover:bg-primary-transparent transition-colors duration-300 disabled:opacity-50"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              {currentLanguage === 'en' ? 'Download Full Catalog' : 'Shkarko katalogun e plotë'}
-            </button>
-            {selectedCategory && selectedCategory !== 'all-products' && (
-              <button
-                onClick={() => handleGeneratePDF('Category Catalog')}
-                disabled={isGeneratingPDF}
-                className="flex items-center px-4 py-2 bg-secondary text-white rounded-full hover:bg-secondary-transparent transition-colors duration-300 disabled:opacity-50"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                {currentLanguage === 'en'
-                  ? `Download ${t(categoryTranslationMap[selectedCategory])} Catalog`
-                  : `Shkarko katalogun për ${t(categoryTranslationMap[selectedCategory])}`}
-              </button>
-            )}
-            {selectedSubcategory && (
-              <button
-                onClick={() => handleGeneratePDF('Subcategory Catalog')}
-                disabled={isGeneratingPDF}
-                className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-full hover:bg-gray-500 transition-colors duration-300 disabled:opacity-50"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                {currentLanguage === 'en'
-                  ? `Download ${t(categoryTranslationMap[selectedSubcategory])} Catalog`
-                  : `Shkarko katalogun për ${t(categoryTranslationMap[selectedSubcategory])}`}
-              </button>
-            )}
-          </div>
-          {isLoading ? (
-            <Loader />
-          ) : filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <AnimatePresence>
-                {filteredProducts.map((product, index) => (
-                  <ProductCard key={product.id ? `${product.id}-${index}` : `product-${index}`} product={product} />
-                ))}
-              </AnimatePresence>
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-xl text-gray-600">
-                {currentLanguage === 'en'
-                  ? 'No products match your search criteria.'
-                  : 'Nuk ka produkte që përputhen me kriteret e kërkimit tuaj.'}
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </div>
