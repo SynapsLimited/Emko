@@ -180,6 +180,13 @@
 }
 
 
+.hero-container-products {
+  background-image: url('../../public/assets/header-images/kreu.jpeg');
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 
 
 

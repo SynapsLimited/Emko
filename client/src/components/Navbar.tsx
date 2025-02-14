@@ -299,7 +299,7 @@ export default function Navbar() {
 const NavLinkItems = [
   { to: "/", name: "navbar.home" },
   { to: "/about", name: "navbar.about" },
-  { to: "/products/category/all", name: "navbar.products" },
+  { to: "/products", name: "navbar.products" },
   { to: "/projects", name: "projects.heroTitle" },
   { to: "/certifications", name: "certifications.heroTitle" },
   { to: "/contact", name: "navbar.contact" }
