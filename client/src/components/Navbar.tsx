@@ -1,5 +1,4 @@
 // src/components/Navbar.tsx
-
 import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,7 +7,6 @@ import LatestProductModal from 'components/LatestProductModal';
 import Marquee from 'components/Marquee';
 import { useTranslation } from 'react-i18next';
 
-// Define the Product interface
 interface Color {
   hex: string;
 }
@@ -40,47 +38,33 @@ export default function Navbar() {
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
   const { i18n, t } = useTranslation();
-  const currentLang = i18n.language || 'sq'; // Default to 'sq' if undefined
+  const currentLang = i18n.language || 'sq';
   const navigate = useNavigate();
 
-  // Variants for NavLinks staggered fade-in
   const navLinkVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: {
-        delay: i * 0.1,
-      },
-    }),
+      transition: { delay: i * 0.1 }
+    })
   };
 
-  // Effect to handle scroll state
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Effect to fetch all products on component mount
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_BASE_URL}/products`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data: Product[] = await response.json();
-
-        if (Array.isArray(data)) {
-          setAllProducts(data);
-        } else {
-          console.error('Fetched products is not an array:', data);
-          setAllProducts([]);
-        }
+        setAllProducts(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error('Error fetching products:', error);
         setAllProducts([]);
@@ -89,59 +73,46 @@ export default function Navbar() {
     fetchProducts();
   }, []);
 
-  // Effect to update suggestions based on query
   useEffect(() => {
     if (!query.trim()) {
       setSuggestions([]);
       return;
     }
-
     const normalizedQuery = normalizeText(query);
     const matchedSuggestions: { product: Product; displayText: string }[] = [];
-
     allProducts.forEach((product) => {
       const name = currentLang === 'en' ? product.name_en || product.name : product.name;
       const variations = currentLang === 'en' ? product.variations_en || product.variations : product.variations;
-
       const normalizedName = normalizeText(name);
       const normalizedVariations = variations.map((v) => normalizeText(v));
-
       const nameMatches = normalizedName.includes(normalizedQuery);
       const matchingVariations = variations.filter((variation, index) =>
         normalizedVariations[index].includes(normalizedQuery)
       );
-
       if (nameMatches && matchingVariations.length > 0) {
         matchingVariations.forEach((variation) => {
           matchedSuggestions.push({
             product,
-            displayText: `${name} - ${variation}`,
+            displayText: `${name} - ${variation}`
           });
         });
       } else if (nameMatches) {
-        matchedSuggestions.push({
-          product,
-          displayText: name,
-        });
+        matchedSuggestions.push({ product, displayText: name });
       } else if (matchingVariations.length > 0) {
         matchingVariations.forEach((variation) => {
           matchedSuggestions.push({
             product,
-            displayText: `${name} - ${variation}`,
+            displayText: `${name} - ${variation}`
           });
         });
       }
     });
-
     setSuggestions(matchedSuggestions);
   }, [query, allProducts, currentLang]);
 
-  // Helper function to normalize text
-  const normalizeText = (text: string): string => {
-    return text.toLowerCase().replace(/ç/g, 'c').replace(/ë/g, 'e');
-  };
+  const normalizeText = (text: string): string =>
+    text.toLowerCase().replace(/ç/g, 'c').replace(/ë/g, 'e');
 
-  // Event handlers for search input
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
     setShowSuggestions(true);
@@ -151,10 +122,7 @@ export default function Navbar() {
     if (suggestions.length > 0) setShowSuggestions(true);
   };
 
-  const handleBlur = () => {
-    // Delay hiding suggestions to allow click on suggestions
-    setTimeout(() => setShowSuggestions(false), 100);
-  };
+  const handleBlur = () => setTimeout(() => setShowSuggestions(false), 100);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -172,10 +140,9 @@ export default function Navbar() {
     setShowSuggestions(false);
   };
 
-  // Function to toggle language
   const toggleLanguage = (lang: string) => {
     setCurrentLanguage(lang);
-    i18n.changeLanguage(lang.toLowerCase()); // Assuming i18n is configured to handle language changes
+    i18n.changeLanguage(lang.toLowerCase());
   };
 
   return (
@@ -186,14 +153,14 @@ export default function Navbar() {
           isScrolled ? 'opacity-0 h-0 overflow-hidden -mb-[10px]' : 'opacity-100'
         }`}
       >
-<div className="container mx-auto flex items-center justify-end">
-  <div className="flex items-center space-x-2 sm:space-x-4 relative">
-    {/* Integrated Search Bar */}
-    <div className="search-bar-container flex relative w-32 sm:w-auto h-5 lg:h-5">
-      <Search className="search-icon absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={12} />
-      <input
+        <div className="container mx-auto flex items-center justify-end">
+          <div className="flex items-center space-x-2 sm:space-x-4 relative">
+            {/* Search Bar */}
+            <div className="search-bar-container flex relative w-32 sm:w-auto h-5 lg:h-5">
+              <Search className="search-icon absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={12} />
+              <input
                 type="search"
-                placeholder={currentLang === 'en' ? "Search..." : "Kërko..."}
+                placeholder={t('navbar.searchPlaceholder')}
                 className="search-input w-full py-1 px-3 pl-8 pr-8 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-primary"
                 style={{ fontSize: '10px' }}
                 value={query}
@@ -234,7 +201,7 @@ export default function Navbar() {
               className="bg-primary text-white p-1 sm:p-2 rounded-full hover:bg-opacity-80 transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              aria-label="Latest Product"
+              aria-label={t('navbar.latestProduct')}
             >
               <Bell size={16} />
             </motion.button>
@@ -253,7 +220,7 @@ export default function Navbar() {
       >
         <div className="container mx-auto flex items-center justify-between px-4">
           <Link to="/" className="font-bold text-primary">
-            <img className="w-[70px] h-[70px] -p-[10px]" src="/assets/emko-logo.png" alt="Logo" />
+            <img className="w-[70px] h-[70px]" src="/assets/emko-logo.png" alt="Logo" />
           </Link>
           <div className="hidden md:flex items-center space-x-8">
             <NavLinks />
@@ -302,11 +269,7 @@ export default function Navbar() {
                   animate="visible"
                 >
                   {NavLinkItems.map((link, index) => (
-                    <motion.div
-                      key={link.to}
-                      custom={index}
-                      variants={navLinkVariants}
-                    >
+                    <motion.div key={link.to} custom={index} variants={navLinkVariants}>
                       <Link
                         to={link.to}
                         className="text-secondary hover:text-primary font-bold text-lg"
@@ -317,11 +280,9 @@ export default function Navbar() {
                     </motion.div>
                   ))}
                 </motion.div>
-                {/* Separator Line */}
                 <div className="my-6 w-full flex justify-center">
                   <span className="h-px bg-gray-300 w-3/4"></span>
                 </div>
-                {/* Language Toggle */}
                 <LanguageToggle currentLanguage={currentLanguage} toggleLanguage={toggleLanguage} mobile />
               </div>
             </motion.div>
@@ -335,14 +296,13 @@ export default function Navbar() {
   );
 }
 
-// Define NavLinkItems outside to use in mobile menu with indexing
 const NavLinkItems = [
-  { to: "/", name: "Home" },
-  { to: "/about", name: "About" },
-  { to: "/products", name: "Products" },
-  { to: "/projects", name: "Projects" },
-  { to: "/certifications", name: "Certifications" },
-  { to: "/contact", name: "Contact" },
+  { to: "/", name: "navbar.home" },
+  { to: "/about", name: "navbar.about" },
+  { to: "/products/category/all", name: "navbar.products" },
+  { to: "/projects", name: "projects.heroTitle" },
+  { to: "/certifications", name: "certifications.heroTitle" },
+  { to: "/contact", name: "navbar.contact" }
 ];
 
 function NavLinks() {
@@ -365,41 +325,34 @@ function NavLinks() {
 function LanguageToggle({
   currentLanguage,
   toggleLanguage,
-  mobile,
+  mobile
 }: {
   currentLanguage: string;
   toggleLanguage: (lang: string) => void;
   mobile?: boolean;
 }) {
   const { t } = useTranslation();
-
   return (
     <div className={`flex p-[10px] space-x-2 ${mobile ? 'flex-col items-center' : 'flex-row'}`}>
-      <div className="relative flex items-center">
-        <motion.button
-          onClick={() => toggleLanguage('SQ')}
-          className={`w-10 h-10 flex items-center justify-center rounded-full border-2 border-primary transition-colors relative
-            ${currentLanguage === 'SQ' ? 'bg-primary text-white' : 'bg-transparent text-primary'}
-          `}
-          whileTap={{ scale: 0.9 }}
-        >
-          SQ
-        </motion.button>
-      </div>
-      {mobile && (
-        <div className="w-full h-px bg-gray-300 my-2"></div>
-      )}
-      <div className="relative flex items-center">
-        <motion.button
-          onClick={() => toggleLanguage('EN')}
-          className={`w-10 h-10 flex items-center justify-center rounded-full border-2 border-primary transition-colors relative
-            ${currentLanguage === 'EN' ? 'bg-primary text-white' : 'bg-transparent text-primary'}
-          `}
-          whileTap={{ scale: 0.9 }}
-        >
-          EN
-        </motion.button>
-      </div>
+      <motion.button
+        onClick={() => toggleLanguage('SQ')}
+        className={`w-10 h-10 flex items-center justify-center rounded-full border-2 border-primary transition-colors ${
+          currentLanguage === 'SQ' ? 'bg-primary text-white' : 'bg-transparent text-primary'
+        }`}
+        whileTap={{ scale: 0.9 }}
+      >
+        SQ
+      </motion.button>
+      {mobile && <div className="w-full h-px bg-gray-300 my-2"></div>}
+      <motion.button
+        onClick={() => toggleLanguage('EN')}
+        className={`w-10 h-10 flex items-center justify-center rounded-full border-2 border-primary transition-colors ${
+          currentLanguage === 'EN' ? 'bg-primary text-white' : 'bg-transparent text-primary'
+        }`}
+        whileTap={{ scale: 0.9 }}
+      >
+        EN
+      </motion.button>
     </div>
   );
 }

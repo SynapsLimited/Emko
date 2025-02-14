@@ -30,7 +30,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(24, 95, 149, 0.6); /* Dark blue overlay with transparency */
+  background: rgba(24, 95, 149, 0.4); /* Dark blue overlay with transparency */
   mix-blend-mode: multiply; /* Blends the overlay to darken the background image */
   z-index: 1;
   pointer-events: none; /* Ensures the overlay doesn’t interfere with interactions */
@@ -172,104 +172,37 @@
 
 /* Home Page Hero */
 .hero-container-home {
-  background-image: url('../../public/assets/emko-rreth-nesh.jpg'); /* Replace with your Home page hero image path */
+  background-image: url('../../public/assets/header-images/kreu.jpeg');
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
+
+
+
+
 
 /* About Page Hero */
 .hero-container-about {
-  background-image: url('../../public/assets/header-images/rreth-nesh.jpg'); /* Replace with your About page hero image path */
+  background-image: url('../../public/assets/header-images/rreth-nesh.jpeg'); /* Replace with your About page hero image path */
 }
 
-/* Products Page Hero */
-.hero-container-products {
-  background-image: url('../../public/assets/header-images/produkte.jpg'); /* Replace with your Products page hero image path */
-}
 
 /* Contact Page Hero */
 .hero-container-contact {
   background-image: url('../../public/assets/header-images/kontakt.jpg'); /* Replace with your Contact page hero image path */
+
 }
 
 /* Projects Page Hero */
 .hero-container-projects {
-  background-image: url('../../public/assets/header-images/projekte.jpg'); /* Replace with your Projects page hero image path */
+  background-image: url('../../public/assets/header-images/projekte.jpeg'); /* Replace with your Projects page hero image path */
 }
 
 /* Certifications Page Hero */
 .hero-container-certifications {
   background-image: url('../../public/assets/header-images/certifikime.jpg'); /* Replace with your Certifications page hero image path */
-}
-
-/* =========================================
-   Specific Hero Containers for Product Categories (17 Categories)
-========================================= */
-
-.hero-container-executive-chairs {
-  background-image: url('../../public/assets/header-images/karrige-ekzekutive.jpg');
-}
-
-.hero-container-plastic-chairs {
-  background-image: url('../../public/assets/header-images/karrige-plastike.jpg');
-}
-
-.hero-container-waiting-chairs {
-  background-image: url('../../public/assets/header-images/karrige-pritese.jpg');
-}
-
-.hero-container-utility-chairs {
-  background-image: url('../../public/assets/header-images/karrige-utilitare.jpg');
-}
-
-.hero-container-amphitheater {
-  background-image: url('../../public/assets/header-images/amfiteater.jpg');
-}
-
-.hero-container-auditoriums {
-  background-image: url('../../public/assets/header-images/auditore.jpg');
-}
-
-.hero-container-seminar-halls {
-  background-image: url('../../public/assets/header-images/salla-seminaresh.jpg');
-}
-
-.hero-container-school-classes {
-  background-image: url('../../public/assets/header-images/klasa-shkolle.jpg');
-}
-
-.hero-container-tables {
-  background-image: url('../../public/assets/header-images/tavolina.jpg');
-}
-
-.hero-container-laboratories {
-  background-image: url('../../public/assets/header-images/laboratore.jpg');
-}
-
-.hero-container-mixed {
-  background-image: url('../../public/assets/header-images/miks.jpg');
-}
-
-.hero-container-industrial-lines {
-  background-image: url('../../public/assets/header-images/Linja industriale.jpg');
-}
-
-.hero-container-metal-cabinets {
-  background-image: url('../../public/assets/header-images/dollape-metalike.jpg');
-}
-
-.hero-container-metal-shelves {
-  background-image: url('../../public/assets/header-images/skafale metalike.jpg');
-}
-
-.hero-container-wardrobes {
-  background-image: url('../../public/assets/header-images/dollape.jpg');
-}
-
-.hero-container-sofas {
-  background-image: url('../../public/assets/header-images/kolltuke.jpg');
-}
-
-.hero-container-stadiums {
-  background-image: url('../../public/assets/header-images/stadiume.jpg');
 }
 
 /* =========================================

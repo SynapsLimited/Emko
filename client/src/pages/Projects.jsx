@@ -1,13 +1,14 @@
 // src/components/Projects.jsx
-
 import React, { useEffect, useRef, useState } from 'react';
 import './../css/projects.css';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
-import Hero from './../components/Hero'
-
+import Hero from './../components/Hero';
+import { useTranslation } from 'react-i18next';
 
 export default function Projects() {
+  const { t } = useTranslation();
+  
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -25,29 +26,22 @@ export default function Projects() {
         setProjects(response.data);
       } catch (err) {
         console.error('Error fetching projects:', err);
-        setError('Failed to fetch projects.');
+        setError(t('projects.error'));
       } finally {
         setLoading(false);
       }
     };
     fetchProjects();
-  }, []);
+  }, [t]);
 
-  // Track scroll position to apply parallax effect
+  // Track scroll position
   useEffect(() => {
-    const handleScroll = () => {
-      const position = window.pageYOffset;
-      setScrollPosition(position);
-    };
-
+    const handleScroll = () => setScrollPosition(window.pageYOffset);
     window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Intersection Observer for animations
+  // Intersection Observer for fade-in animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
@@ -59,11 +53,9 @@ export default function Projects() {
       },
       { threshold: 0.1 }
     );
-
     sectionRefs.current.forEach(ref => {
       if (ref) observer.observe(ref);
     });
-
     return () => observer.disconnect();
   }, [projects]);
 
@@ -73,15 +65,11 @@ export default function Projects() {
     setModalOpen(true);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  const closeModal = () => setModalOpen(false);
 
   const goToPreviousImage = () => {
     const projectImages = projects[currentProjectIndex].images;
-    setCurrentImageIndex(
-      prevIndex => (prevIndex - 1 + projectImages.length) % projectImages.length
-    );
+    setCurrentImageIndex(prevIndex => (prevIndex - 1 + projectImages.length) % projectImages.length);
   };
 
   const goToNextImage = () => {
@@ -90,7 +78,7 @@ export default function Projects() {
   };
 
   if (loading) {
-    return <div className="loader">Loading...</div>; // Or use your Loader component
+    return <div className="loader">{t('projects.loading')}</div>;
   }
 
   if (error) {
@@ -100,23 +88,23 @@ export default function Projects() {
   return (
     <div>
       <Helmet>
-        <title>Emko - Projekte</title>
+        <title>{t('projects.pageTitle')}</title>
+        <meta name="description" content={t('projects.description')} />
+        <meta property="og:title" content={t('projects.pageTitle')} />
+        <meta property="og:description" content={t('projects.description')} />
+        <meta property="og:image" content="https://www.emko-client.vercel.app/assets/emko-logo.png" />
+        <meta property="og:url" content="https://www.emko-client.vercel.app/projects" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://www.emko-client.vercel.app/projects" />
       </Helmet>
 
-      {/* Hero Section */}
-      <Hero
-        type="projects"
-        scrollPosition={scrollPosition}
-        title="Projekte"
-      />
+      <Hero type="projects" scrollPosition={scrollPosition} title={t('projects.heroTitle')} />
 
       <div className="container">
         {projects.map((project, index) => (
           <section
             key={project.slug || index}
-            ref={el => {
-              sectionRefs.current[index] = el;
-            }}
+            ref={el => { sectionRefs.current[index] = el; }}
             className="project-section"
           >
             <h1 className="project-title">{project.name}</h1>
@@ -140,7 +128,7 @@ export default function Projects() {
                   </div>
                 ))
               ) : (
-                <p>No images available for this project.</p>
+                <p>{t('projects.noImages')}</p>
               )}
             </div>
           </section>
@@ -156,9 +144,7 @@ export default function Projects() {
                 ‹
               </button>
               <img
-                src={
-                  projects[currentProjectIndex].images[currentImageIndex]
-                }
+                src={projects[currentProjectIndex].images[currentImageIndex]}
                 alt="Modal"
                 className="modal-image"
               />

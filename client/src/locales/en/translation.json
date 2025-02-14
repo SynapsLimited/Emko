@@ -1,10 +1,171 @@
 {
-    "navbar": {
-      "home": "Home",
-      "about": "About Us",
-      "products": "Products",
-      "projects": "Projects",
-      "contact": "Contact"
+  "navbar": {
+    "home": "Home",
+    "about": "About Us",
+    "products": "Products",
+    "blog": "Blog",
+    "contact": "Contact",
+    "searchPlaceholder": "Search...",
+    "latestProduct": "Latest Products"
+  },
+  "hero": {
+    "welcome": "Welcome to Emko",
+    "defaultTitle": "Category or Page Title"
+  },
+  "about": {
+    "pageTitle": "Emko - About Us",
+    "heroTitle": "About Us",
+    "whoAreWeTitle": "Who are we?",
+    "whoAreWeText": "With extensive and long experience in the Albanian and regional market as a patented manufacturer for 18 years by international institutions, <strong>EMKO</strong> has built a respected name and a long history of success. We offer a wide range of office and educational institution furniture products, designed and manufactured according to the highest quality standards, also tailored to the specific needs of each client. For us, every client is important and your requirements are our priority. By choosing us, you will benefit not only from the quality of our products but also from excellent service and support that you deserve.",
+    "projectsButton": "Our Projects",
+    "visionTitle": "Our Vision",
+    "visionText": "Our vision is to be a leader in both the Albanian and international furniture market by offering products of the highest quality and unmatched aesthetic value.",
+    "missionTitle": "Our Mission",
+    "missionText": "Our mission is to meet the needs and demands of our clients by emphasizing our company values: accuracy, quality, and professionalism.",
+    "valuesTitle": "Our Values",
+    "value1Title": "Accuracy",
+    "value1Text": "At EMKO, we focus on every detail of planning and coordination to ensure that our clients experience a high level of accuracy in every order delivered. EMKO is a manufacturer that easily adapts to your specific design and requirements. With an unwavering commitment to fulfilling your needs, we ensure that products are delivered on time and within the designated timeframe.",
+    "value2Title": "Quality",
+    "value2Text": "Our products are innovative and efficient in complementing your spaces. Our collaboration with renowned international partners, including well-known Italian partners, allows us to bring the latest and most innovative furniture solutions to the market. This blend of our 25-year experience with patents and international expertise ensures that you receive the best products for your needs.",
+    "value3Title": "Professionalism",
+    "value3Text": "One of our strong points is our unwavering commitment to quality and customer service. With the UNE-EN-ISO 9001/08 quality certificate, we demonstrate our dedication to manufacturing and providing high-quality products. Our professional team is always available to offer technical assistance and solutions for any furniture needs."
+  },
+  "certifications": {
+    "pageTitle": "Emko - Certifications",
+    "heroTitle": "Certifications",
+    "title": "Our Certifications",
+    "subtitle": "EMKO is proud to hold various international certifications that demonstrate our commitment to quality, safety, and environmental responsibility.",
+    "previous": "Previous Slide",
+    "next": "Next Slide"
+  },
+  "contact": {
+    "pageTitle": "Emko - Contact",
+    "heroTitle": "Contact",
+    "formTitle": "Fill Out the Form",
+    "formSubtitle": "Fill out the form now and we will contact you within the next 24 hours!",
+    "map": {
+      "iframeTitle": "Location Map"
     }
-
+  },
+  
+  "home": {
+    "pageTitle": "Emko",
+    "aboutSubtitle": "About Us",
+    "aboutTitle": "Why are we the right choice?",
+    "aboutDescription": "With extensive and long experience in the Albanian and regional market as a patented manufacturer for 18 years by international institutions, EMKO has built a respected name and a long history of success. We offer a wide range of office and educational institution furniture products, designed and manufactured according to the highest quality standards, also tailored to the specific needs of each client. For us, every client is important and your requirements are our priority. By choosing us, you will benefit not only from the quality of our products but also from excellent service and support that you deserve."
+  },
+  "stats": {
+    "clients": "Satisfied Clients",
+    "experience": "Years of Experience",
+    "projects": "Projects Completed",
+    "office": "Head Office"
+  },
+  "products": {
+    "pageTitle": "Emko - Products",
+    "heroTitle": "Products",
+    "ourProducts": "Our Products",
+    "exploreCategories": "Explore Our Categories",
+    "productsDescription": "Discover our wide range of furniture solutions designed for various institutional needs. From office spaces to educational environments, we have the perfect furniture to meet your requirements.",
+    "loadingCategories": "Loading categories..."
+  },
+  "projects": {
+    "pageTitle": "Emko - Projects",
+    "heroTitle": "Projects",
+    "noImages": "No images available for this project.",
+    "description": "Explore Emko's completed projects and see our work in action.",
+    "loading": "Loading...",
+    "error": "Failed to fetch projects."
+  },
+  "categories": {
+    "allProducts": "All Products",
+    "title": "Categories"
+  },
+  "productDetail": {
+    "variations": "Variations:",
+    "availableColors": "Available Colors:",
+    "backToProducts": "Back to Products",
+    "backToHome": "Back to Home",
+    "noImage": "No image available"
+  },
+  "contactForm": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "message": "Your Message",
+    "send": "Send"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "introductionTitle": "Introduction",
+    "introductionText": "Welcome to Emko. We value your privacy and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard your information when you visit our website and use our services.",
+    "informationWeCollectTitle": "Information We Collect",
+    "informationWeCollectText": "We may collect various types of information to provide and improve our services to you.",
+    "personalData": "Personal Data: Identifiable information such as your name, email address, phone number, and mailing address.",
+    "usageData": "Usage Data: Information on how you access and use our website, including your IP address, browser type, pages visited, and time spent on pages.",
+    "cookies": "Cookies and Tracking Data: We use cookies and similar tracking technologies to track activity on our website and store certain information.",
+    "marketingData": "Marketing and Communications Data: Your preferences in receiving marketing from us and your communication preferences.",
+    "howWeUseTitle": "How We Use Your Information",
+    "howWeUseText": "We use the collected data for various purposes:",
+    "toProvideService": "To Provide and Maintain Our Service",
+    "toImproveService": "To Improve Our Service",
+    "toCommunicate": "To Communicate with You",
+    "toProcessTransactions": "To Process Transactions",
+    "toEnsureSecurity": "To Ensure Security",
+    "informationSharingTitle": "Information Sharing",
+    "informationSharingText": "We may share your information in the following circumstances:",
+    "withServiceProviders": "With Service Providers",
+    "forLegalRequirements": "For Legal Requirements",
+    "businessTransfers": "Business Transfers",
+    "withConsent": "With Your Consent",
+    "cookiesTitle": "Cookies and Tracking Technologies",
+    "cookiesText": "We use cookies to track activity on our website and store certain information. Cookies help us improve your browsing experience by remembering your preferences and understanding how you use our site.",
+    "dataSecurityTitle": "Data Security",
+    "dataSecurityText": "We implement various security measures to maintain the safety of your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee its absolute security.",
+    "yourRightsTitle": "Your Rights",
+    "yourRightsText": "Depending on your location, you may have the following rights regarding your personal data:",
+    "access": "Access to your personal data",
+    "rectification": "Rectification of inaccurate data",
+    "erasure": "Erasure of your personal data",
+    "restriction": "Restriction of data processing",
+    "portability": "Data portability",
+    "objection": "Objection to data processing",
+    "changesTitle": "Changes to This Privacy Policy",
+    "changesText": "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes.",
+    "contactUsTitle": "Contact Us",
+    "contactUsText": "If you have any questions about this Privacy Policy, please contact us:",
+    "email": "Email: infoemko@yahoo.com",
+    "address": "Address: Vaqarr, Lalm mbas AnOil, Tirana",
+    "phone": "Phone: +355 68 400 8000"
+  },
+  "productsSection": {
+    "sectionSubtitle": "Our Products",
+    "sectionTitle": "Explore Our Categories",
+    "sectionDescription": "Discover our wide range of furniture solutions designed for various institutional needs. From office spaces to educational environments, we have the perfect furniture to meet your requirements."
+  },
+  "statsSection": {
+    "subtitle": "Facts about EMKO"
+  },
+  "cookieConsent": {
+    "text": "We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking \"Accept\", you consent to our use of cookies. You can learn more in our \"Privacy Policy\".",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "errorPage": {
+    "goHome": "Go Back Home",
+    "title": "Oops! Something went wrong.",
+    "message": "We can’t seem to find the page you’re looking for. It might have been moved or deleted."
+  },
+  "footer": {
+    "location": "Location",
+    "contact": "Contact",
+    "socials": "Social Networks",
+    "copyright": "Copyright © Emko. All rights reserved.",
+    "designedBy": "Designed by",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "latestProductModal": {
+    "title": "Latest Products",
+    "viewDetails": "View Details"
   }
+}

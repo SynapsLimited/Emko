@@ -1,11 +1,167 @@
 {
-    "navbar": {
-      "home": "Kreu",
-      "about": "Rreth Nesh",
-      "products": "Produkte",
-      "blog": "Artikujt",
-      "contact": "Kontakt"
+  "navbar": {
+    "home": "Kreu",
+    "about": "Rreth Nesh",
+    "products": "Produkte",
+    "blog": "Artikujt",
+    "contact": "Kontakt",
+    "searchPlaceholder": "Kërko...",
+    "latestProduct": "Produktet më të fundit"
+  },
+  "hero": {
+    "welcome": "Mirësevini te Emko",
+    "defaultTitle": "Kategoria ose Titulli i Faqes"
+  },
+  "about": {
+    "pageTitle": "Emko - Rreth Nesh",
+    "heroTitle": "Rreth Nesh",
+    "whoAreWeTitle": "Kush jemi ne?",
+    "whoAreWeText": "Me një përvojë të pasur dhe të gjatë në tregun shqiptar dhe rajonal si prodhues i patentuar prej 18 vitesh nga institucione ndërkombëtare, <strong>EMKO</strong> ka ndërtuar një emër të respektuar dhe një histori të gjatë suksesi. Ne ofrojmë një gamë të gjerë produktesh të mobilimit të zyrave dhe institucioneve arsimore, të dizajnuara dhe prodhuara sipas standardeve më të larta të cilësisë, gjithashtu të përshtatura sipas dëshirave specifike të çdo klienti. Për ne, çdo klient është i rëndësishëm dhe kërkesat tuaja janë prioriteti ynë. Nëpërmjet zgjedhjes sonë, ju do të përfitoni jo vetëm nga cilësia e produkteve tona, por edhe nga një shërbim i shkëlqyeshëm dhe përkrahja që meritoni.",
+    "projectsButton": "Projektet tona",
+    "visionTitle": "Vizioni ynë",
+    "visionText": "Vizioni ynë është të jemi lider në tregun shqiptar dhe internacional të mobiljeve duke ofruar produkte me kualitet të lartë dhe vlera estetike të pakrahasueshme.",
+    "missionTitle": "Misioni ynë",
+    "missionText": "Misioni ynë është ti përmbushim nevojat dhe kërkesat e klientëve tanë duke vënë në pah vlerat e kompanisë sonë; korrektësi, cilësi, profesionalizëm.",
+    "valuesTitle": "Vlerat tona",
+    "value1Title": "Korrektësi",
+    "value1Text": "Në EMKO, ne përqendrohemi në çdo detaj të planifikimit dhe koordinimit për të garantuar që klientët tanë të përjetojnë një nivel të lartë korrektësie në secilën porosi të realizuar. Kompania Emko është prodhues dhe përshtatet lehtë me dizajnet dhe kërkesat tuaja specifike. Me një angazhim të palëkundur për të plotësuar kërkesat tuaja, ne sigurojmë që produktet të dorëzohen në kohë dhe në përputhje me afatin e caktuar.",
+    "value2Title": "Cilësi",
+    "value2Text": "Produktet tona janë inovative dhe efikase për të kompletuar ambientet tuaja. Bashkëpunimi jonë me partnerët e njohur ndërkombëtarë, si partnerët e njohur italianë, na jep mundësinë të sjellim në treg produktet më inovative dhe të fundit në fushën e mobilimit. Ky gërshetim i përvojës sonë 25-vjeçare me patentime dhe ekspertizë ndërkombëtare siguron që ju të merrni produktet më të mira për nevojat tuaja.",
+    "value3Title": "Profesionalizëm",
+    "value3Text": "Një ndër pikat tona të forta është angazhimi i palëkundur ndaj cilësisë dhe shërbimit të klientit. Me çertifikatën e cilësisë UNE-EN-ISO 9001/08, ne dëshmojmë përkushtimin tonë për prodhimin dhe ofrimin e produkteve të cilësisë së lartë. Ekipi ynë profesional është gjithmonë në dispozicion tuaj për të ofruar asistencë teknike dhe zgjidhje për çdo nevojë të mobilimit."
+  },
+  "certifications": {
+    "pageTitle": "Emko - Çertifikime",
+    "heroTitle": "Certifikime",
+    "title": "Certifikimet tona",
+    "subtitle": "EMKO është krenar që ka në dorë çertifikata të ndryshme ndërkombëtare që demonstrojnë përkushtimin tonë ndaj cilësisë, sigurisë dhe përgjegjësisë ndaj mjedisit.",
+    "previous": "Slide e Mëparshme",
+    "next": "Slide e Ardhshme"
+  },
+  "contact": {
+    "pageTitle": "Emko - Kontakt",
+    "heroTitle": "Kontakt",
+    "formTitle": "Plotëso formularin",
+    "formSubtitle": "Plotëso formularin tani dhe ne do t'ju kontaktojmë brenda 24 orëve të ardhshme!",
+    "map": {
+      "iframeTitle": "Harta e Lokacionit"
     }
-  
+  },
+  "home": {
+    "pageTitle": "Emko",
+    "aboutSubtitle": "Rreth nesh",
+    "aboutTitle": "Pse ne jemi zgjedhja e duhur?",
+    "aboutDescription": "Me një përvojë të pasur dhe të gjatë në tregun shqiptar dhe rajonal si prodhues i patentuar prej 18 vitesh nga institucione ndërkombëtare, EMKO ka ndërtuar një emër të respektuar dhe një histori të gjatë suksesi. Ne ofrojmë një gamë të gjerë produktesh të mobilimit të zyrave dhe institucioneve arsimore, të dizajnuara dhe prodhuara sipas standardeve më të larta të cilësisë, gjithashtu të përshtatura sipas dëshirave specifike të çdo klienti. Për ne, çdo klient është i rëndësishëm dhe kërkesat tuaja janë prioriteti ynë. Nëpërmjet zgjedhjes sonë, ju do të përfitoni jo vetëm nga cilësia e produkteve tona, por edhe nga një shërbim i shkëlqyeshëm dhe përkrahja që meritoni."
+  },
+  "stats": {
+    "clients": "Klientë të kënaqur",
+    "experience": "Vite Eksperiencë",
+    "projects": "Projekte të realizuara",
+    "office": "Zyra qendrore"
+  },
+  "products": {
+    "pageTitle": "Emko - Produkte",
+    "heroTitle": "Produkte",
+    "ourProducts": "Produktet tona",
+    "exploreCategories": "Eksploroni Kategoritë tona",
+    "productsDescription": "Zbuloni gamën tonë të gjerë të zgjidhjeve të mobiljeve të dizajnuara për nevoja të ndryshme institucionale. Nga hapësirat e zyrave deri te mjediset arsimore, ne kemi mobiljen perfekte për të përmbushur kërkesat tuaja.",
+    "loadingCategories": "Duke ngarkuar kategoritë..."
+  },
+  "projects": {
+    "pageTitle": "Emko - Projekte",
+    "heroTitle": "Projekte",
+    "noImages": "Asnjë imazh në dispozicion për këtë projekt."
+  },
+  "categories": {
+    "allProducts": "Të gjitha produktet",
+    "title": "Kategoritë"
+  },
+  "productDetail": {
+    "variations": "Variacione:",
+    "availableColors": "Ngjyrat e disponueshme:",
+    "backToProducts": "Kthehu tek Produktet",
+    "backToHome": "Kthehu tek Kreu",
+    "noImage": "Asnjë imazh në dispozicion"
+  },
+  "contactForm": {
+    "firstName": "Emri",
+    "lastName": "Mbiemri",
+    "email": "Email Adresa",
+    "phone": "Numri i Telefonit",
+    "message": "Mesazhi juaj",
+    "send": "Dërgo"
+  },
+  "privacyPolicy": {
+    "title": "Politika e Privatësisë",
+    "introductionTitle": "Hyrje",
+    "introductionText": "Mirësevini në Emko. Ne vlerësojmë privatësinë tuaj dhe jemi të përkushtuar për të mbrojtur informacionin tuaj personal. Kjo Politikë e Privatësisë përshkruan mënyrën se si ne mbledhim, përdorim, zbulojmë dhe mbrojmë informacionin tuaj kur vizitoni faqen tonë dhe përdorni shërbimet tona.",
+    "informationWeCollectTitle": "Informacioni që mbledhim",
+    "informationWeCollectText": "Ne mund të mbledhim lloje të ndryshme informacioni për të ofruar dhe përmirësuar shërbimet tona për ju.",
+    "personalData": "Të dhëna personale: Informacione identifikuese si emri, adresa email, numri i telefonit dhe adresa postare.",
+    "usageData": "Të dhëna të përdorimit: Informacione se si ju hyni dhe përdorni faqen tonë, duke përfshirë adresën IP, llojin e shfletuesit, faqet e vizituara dhe koha e kaluar në faqe.",
+    "cookies": "Cookies dhe të dhëna ndjekëse: Ne përdorim cookies dhe teknologji të ngjashme për të ndjekur aktivitetin në faqen tonë dhe për të ruajtur informacion të caktuar.",
+    "marketingData": "Të dhëna marketingu dhe komunikimi: Preferencat tuaja për marrjen e materialeve promocionale dhe preferencat e komunikimit.",
+    "howWeUseTitle": "Si përdorim informacionin tuaj",
+    "howWeUseText": "Ne përdorim të dhënat e mbledhura për qëllime të ndryshme:",
+    "toProvideService": "Për të ofruar dhe mbajtur shërbimin tonë",
+    "toImproveService": "Për të përmirësuar shërbimin tonë",
+    "toCommunicate": "Për të komunikuar me ju",
+    "toProcessTransactions": "Për të përpunuar transaksionet",
+    "toEnsureSecurity": "Për të siguruar sigurinë",
+    "informationSharingTitle": "Ndërveprimi i informacionit",
+    "informationSharingText": "Ne mund të ndajmë informacionin tuaj në rrethana të ndryshme:",
+    "withServiceProviders": "Me ofruesit e shërbimeve",
+    "forLegalRequirements": "Për kërkesat ligjore",
+    "businessTransfers": "Transferime biznesi",
+    "withConsent": "Me pëlqimin tuaj",
+    "cookiesTitle": "Cookies dhe teknologjitë ndjekëse",
+    "cookiesText": "Ne përdorim cookies për të ndjekur aktivitetin në faqen tonë dhe për të ruajtur informacion të caktuar. Cookies na ndihmojnë të përmirësojmë eksperiencën tuaj të shfletimit duke mbajtur mend preferencat tuaja dhe duke kuptuar se si përdorni faqen tonë.",
+    "dataSecurityTitle": "Siguria e të dhënave",
+    "dataSecurityText": "Ne zbatojmë masa të ndryshme sigurie për të mbajtur sigurinë e informacionit tuaj personal. Megjithatë, asnjë metodë transmetimi nëpër Internet ose ruajtje elektronike nuk është 100% e sigurt, dhe ne nuk mund ta garantojmë sigurinë absolute.",
+    "yourRightsTitle": "Të drejtat tuaja",
+    "yourRightsText": "Varet nga vendndodhja juaj, ju mund të keni të drejta për të kërkuar:",
+    "access": "Qasja në të dhënat tuaja personale",
+    "rectification": "Korektimi i të dhënave jo të sakta",
+    "erasure": "Fshirja e të dhënave tuaja personale",
+    "restriction": "Kufizimi i përpunimit të të dhënave tuaja",
+    "portability": "Transferimi i të dhënave tuaja",
+    "objection": "Objektimi ndaj përpunimit të të dhënave tuaja",
+    "changesTitle": "Ndryshimet në këtë Politikë të Privatësisë",
+    "changesText": "Ne mund të përditësojmë Politikën tonë të Privatësisë herë pas here. Ne do t'ju njoftojmë për çdo ndryshim duke postuar Politikën e re në këtë faqe. Ju rekomandojmë të kontrolloni periodikisht këtë faqe për ndryshime.",
+    "contactUsTitle": "Na kontaktoni",
+    "contactUsText": "Nëse keni ndonjë pyetje në lidhje me këtë Politikë të Privatësisë, ju lutemi na kontaktoni:",
+    "email": "Email: infoemko@yahoo.com",
+    "address": "Adresa: Vaqarr, Lalm mbas AnOil, Tirana",
+    "phone": "Telefon: +355 68 400 8000"
+  },
+  "productsSection": {
+    "sectionSubtitle": "Produktet tona",
+    "sectionTitle": "Eksploroni Kategoritë tona",
+    "sectionDescription": "Zbuloni gamën tonë të gjerë të zgjidhjeve të mobiljeve të dizajnuara për nevoja të ndryshme institucionale. Nga hapësirat e zyrave deri te mjediset arsimore, ne kemi mobiljen perfekte për të përmbushur kërkesat tuaja."
+  },
+  "statsSection": {
+    "subtitle": "Fakte rreth EMKO-s"
+  },
+  "cookieConsent": {
+    "text": "Ne përdorim cookies për të përmirësuar eksperiencën tuaj të shfletimit, për të shërbyer reklama ose përmbajtje të personalizuar, dhe për të analizuar trafikun tonë. Duke klikuar \"Prano\", ju jeni dakord me përdorimin e cookies. Ju mund të mësoni më shumë në \"Politikën e Privatësisë\".",
+    "accept": "Prano",
+    "decline": "Refuzo"
+  },
+  "errorPage": {
+    "goHome": "Kthehu te Kreu",
+    "title": "Oops! Diçka shkoi gabim.",
+    "message": "Nuk mund të gjejmë faqen që kërkoni. Mund të ketë qenë e zhvendosur ose e fshirë."
+  },
+  "footer": {
+    "location": "Vendndodhja",
+    "contact": "Kontakt",
+    "socials": "Rrjete Sociale",
+    "copyright": "Copyright © Emko. Të gjitha të drejtat e rezervuara.",
+    "designedBy": "Dizenjuar nga",
+    "privacyPolicy": "Termat e privatësisë"
+  },
+  "latestProductModal": {
+    "title": "Produktet më të fundit",
+    "viewDetails": "Shiko Detajet"
   }
-  
+}

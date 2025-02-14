@@ -1,3 +1,17 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /register
+Disallow: /login
+Disallow: /profile
+Disallow: /logout
+Disallow: /products-dashboard
+Disallow: /create-product
+Disallow: /products/*/delete
+Disallow: /products/*/edit
+Disallow: /projects-dashboard
+Disallow: /create-project
+Disallow: /projects/*/delete
+Disallow: /projects/*/edit
+
+Allow: /
+
+Sitemap: https://emko-serve.vercel.app/sitemap.xml

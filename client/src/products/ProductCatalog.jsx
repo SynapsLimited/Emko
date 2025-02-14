@@ -1,5 +1,4 @@
 // src/pages/ProductCatalog.jsx
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Search, Download } from 'lucide-react';
@@ -9,6 +8,7 @@ import CategoryPanel from './CategoryPanel';
 import { generatePDF, generateFilteredPDF } from '../utils/pdfGenerator';
 import Loader from '../components/Loader';
 import categories from '../data/categories';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
 const ProductCatalog = () => {
@@ -19,35 +19,32 @@ const ProductCatalog = () => {
   const [selectedCategory, setSelectedCategory] = useState('all-products'); // Using slug
   const [selectedSubcategory, setSelectedSubcategory] = useState(''); // Using slug
   const [searchQuery, setSearchQuery] = useState('');
-  const [allProducts, setAllProducts] = useState([]); // New state for all products
+  const [allProducts, setAllProducts] = useState([]); // All products from API
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
-  // Memoize categoryTranslationMap to prevent unnecessary re-renders
+  // Build a translation map from categories data for easy access
   const categoryTranslationMap = useMemo(() => {
     const map = categories.reduce((acc, cat) => {
       acc[cat.slug] = { sq: cat.name.sq, en: cat.name.en };
-      cat.subcategories.forEach(sub => {
+      cat.subcategories.forEach((sub) => {
         acc[sub.slug] = { sq: sub.name.sq, en: sub.name.en };
       });
       return acc;
     }, {});
-
-    // Add 'All Products' translation
+    // Add "all-products" translation manually
     map['all-products'] = { sq: 'Të gjitha produktet', en: 'All Products' };
-
     return map;
   }, [categories]);
 
-  // Find the selected category object based on the selectedCategory slug
+  // Get the selected category data
   const selectedCategoryData = categories.find(cat => cat.slug === selectedCategory);
-
-  // If a subcategory is selected, find the corresponding subcategory object
+  // And, if a subcategory is selected, get its data
   const selectedSubcategoryData = selectedCategoryData?.subcategories.find(sub => sub.slug === selectedSubcategory);
 
-  // Fetch all products once
+  // Fetch all products once from your API
   useEffect(() => {
     const fetchAllProducts = async () => {
       setIsLoading(true);
@@ -64,22 +61,18 @@ const ProductCatalog = () => {
         setIsLoading(false);
       }
     };
-
     fetchAllProducts();
   }, []);
 
   // Filter products based on selected category and subcategory
   useEffect(() => {
     let filtered = allProducts;
-
     if (selectedCategory !== 'all-products') {
       filtered = filtered.filter(product => product.category === selectedCategory);
     }
-
     if (selectedSubcategory) {
       filtered = filtered.filter(product => product.subcategory === selectedSubcategory);
     }
-
     setProducts(filtered);
     setFilteredProducts(filtered);
   }, [selectedCategory, selectedSubcategory, allProducts]);
@@ -90,21 +83,19 @@ const ProductCatalog = () => {
       setFilteredProducts(products);
     } else {
       const normalizedSearchQuery = searchQuery.toLowerCase();
-
       const filtered = products.filter(product => {
         const title = currentLanguage === 'en' ? (product.name_en || product.name) : product.name;
         const description = currentLanguage === 'en' ? (product.description_en || product.description) : product.description;
-
         return (
           title.toLowerCase().includes(normalizedSearchQuery) ||
           description.toLowerCase().includes(normalizedSearchQuery)
         );
       });
-
       setFilteredProducts(filtered);
     }
   }, [searchQuery, products, currentLanguage]);
 
+  // Handlers for category and subcategory selection
   const handleCategorySelect = (categorySlug) => {
     setSelectedCategory(categorySlug);
     setSelectedSubcategory('');
@@ -115,26 +106,22 @@ const ProductCatalog = () => {
     setSelectedSubcategory(subcategorySlug);
   };
 
-  // Sorting function
+  // Sorting function (by category then subcategory)
   const sortProducts = (productsList) => {
     return productsList.sort((a, b) => {
-      // Compare categories
       if (a.category < b.category) return -1;
       if (a.category > b.category) return 1;
-
-      // If categories are equal, compare subcategories
       if (a.subcategory < b.subcategory) return -1;
       if (a.subcategory > b.subcategory) return 1;
-
       return 0;
     });
   };
 
+  // Handler for PDF generation
   const handleGeneratePDF = async (catalogType) => {
     setIsGeneratingPDF(true);
     try {
       let productsToGenerate = [];
-
       if (catalogType === 'Full Catalog') {
         productsToGenerate = sortProducts([...allProducts]);
         await generatePDF(
@@ -168,20 +155,34 @@ const ProductCatalog = () => {
       navigate('/products/category/all');
     } catch (error) {
       console.error('Error generating PDF:', error);
-      alert(currentLanguage === 'en' ? 'Error generating PDF. Please try again.' : 'Gabim gjatë gjenerimit të PDF. Ju lutemi provoni përsëri.');
+      alert(
+        currentLanguage === 'en'
+          ? 'Error generating PDF. Please try again.'
+          : 'Gabim gjatë gjenerimit të PDF. Ju lutemi provoni përsëri.'
+      );
     } finally {
       setIsGeneratingPDF(false);
     }
   };
 
-  // Helper function for translation
-  const t = (translationObj) => {
+  // Helper function for local translation of a given object
+  const tLocal = (translationObj) => {
     if (!translationObj) return '';
     return currentLanguage === 'en' ? translationObj.en : translationObj.sq;
   };
 
   return (
     <div className='pt-[12rem]'>
+      <Helmet>
+        <title>{`Emko - ${tLocal(categoryTranslationMap[selectedCategory] || { en: 'All Products', sq: 'Të gjitha produktet' })} Catalog`}</title>
+        <meta name="description" content="Explore our comprehensive catalog of Emko products, designed for various institutional needs." />
+        <meta property="og:title" content={`Emko - ${tLocal(categoryTranslationMap[selectedCategory] || { en: 'All Products', sq: 'Të gjitha produktet' })} Catalog`} />
+        <meta property="og:description" content="Explore our comprehensive catalog of Emko products, designed for various institutional needs." />
+        <meta property="og:image" content="https://www.emko-client.vercel.app/assets/emko-logo.png" />
+        <meta property="og:url" content={`https://www.emko-client.vercel.app/products/category/${selectedCategory}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href={`https://www.emko-client.vercel.app/products/category/${selectedCategory}`} />
+      </Helmet>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-4">
           {currentLanguage === 'en' ? 'Our Products' : 'Produktet Tona'}
@@ -211,29 +212,25 @@ const ProductCatalog = () => {
               selectedSubcategory={selectedSubcategory}
               onSelectCategory={handleCategorySelect}
               onSelectSubcategory={handleSubcategorySelect}
-              currentLanguage={currentLanguage} // Pass currentLanguage
+              currentLanguage={currentLanguage}
             />
           </div>
           <div className="md:w-3/4">
             <div className="mb-4">
               <h2 className="text-2xl font-semibold">
-                {t(categoryTranslationMap[selectedCategory] || { en: 'All Products', sq: 'Të gjitha produktet' })}
+                {tLocal(categoryTranslationMap[selectedCategory] || { en: 'All Products', sq: 'Të gjitha produktet' })}
               </h2>
-              
               {selectedSubcategory ? (
                 <>
-                  {/* Display Subcategory Name */}
                   <p className="text-gray-600">
-                    {t(categoryTranslationMap[selectedSubcategory] || { en: selectedSubcategory, sq: selectedSubcategory })}
+                    {tLocal(categoryTranslationMap[selectedSubcategory] || { en: selectedSubcategory, sq: selectedSubcategory })}
                   </p>
-                  {/* Display Subcategory Description */}
                   <p className="text-gray-600 mt-2">
                     {selectedSubcategoryData?.description?.[currentLanguage] || ''}
                   </p>
                 </>
               ) : (
                 (selectedCategory !== 'all-products') && (
-                  /* Display Category Description */
                   <p className="text-gray-600 mt-2">
                     {selectedCategoryData?.description?.[currentLanguage] || ''}
                   </p>
@@ -257,8 +254,8 @@ const ProductCatalog = () => {
                 >
                   <Download className="w-4 h-4 mr-2" />
                   {currentLanguage === 'en'
-                    ? `Download ${t(categoryTranslationMap[selectedCategory])} Catalog`
-                    : `Shkarko katalogun për ${t(categoryTranslationMap[selectedCategory])}`}
+                    ? `Download ${tLocal(categoryTranslationMap[selectedCategory])} Catalog`
+                    : `Shkarko katalogun për ${tLocal(categoryTranslationMap[selectedCategory])}`}
                 </button>
               )}
               {selectedSubcategory && (
@@ -269,8 +266,8 @@ const ProductCatalog = () => {
                 >
                   <Download className="w-4 h-4 mr-2" />
                   {currentLanguage === 'en'
-                    ? `Download ${t(categoryTranslationMap[selectedSubcategory])} Catalog`
-                    : `Shkarko katalogun për ${t(categoryTranslationMap[selectedSubcategory])}`}
+                    ? `Download ${tLocal(categoryTranslationMap[selectedSubcategory])} Catalog`
+                    : `Shkarko katalogun për ${tLocal(categoryTranslationMap[selectedSubcategory])}`}
                 </button>
               )}
             </div>

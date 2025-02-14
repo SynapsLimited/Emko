@@ -1,45 +1,46 @@
 // src/components/CookieConsent.jsx
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import './../css/cookieconsent.css';
+import { useTranslation } from 'react-i18next';
 
 const CookieConsent = () => {
+  const { t } = useTranslation();
   const [showConsent, setShowConsent] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem('adshCookieConsent');
-    if (!consent) {
-      setShowConsent(true);
-    }
+    const consent = Cookies.get('adshCookieConsent');
+    if (consent === undefined) setShowConsent(true);
   }, []);
 
   const acceptCookies = () => {
-    localStorage.setItem('adshCookieConsent', 'true');
+    Cookies.set('adshCookieConsent', 'true', { expires: 365 });
     setShowConsent(false);
   };
 
   const declineCookies = () => {
-    localStorage.setItem('adshCookieConsent', 'false');
+    Cookies.set('adshCookieConsent', 'false', { expires: 365 });
     setShowConsent(false);
   };
 
-  if (!showConsent) {
-    return null;
-  }
+  if (!showConsent) return null;
 
   return (
     <div className="cookie-consent">
       <div className="cookie-consent__content">
         <p>
-          We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept", you consent to our use of cookies. You can learn more in our <Link to="/privacy-policy" className="cookie-consent__link">Privacy Policy</Link>.
+          {t('cookieConsent.text')}{' '}
+          <Link to="/privacy-policy" className="cookie-consent__link">
+            {t('footer.privacyPolicy')}
+          </Link>
         </p>
         <div className="cookie-consent__buttons">
           <button className="cookie-consent__button accept" onClick={acceptCookies}>
-            Accept
+            {t('cookieConsent.accept')}
           </button>
           <button className="cookie-consent__button decline" onClick={declineCookies}>
-            Decline
+            {t('cookieConsent.decline')}
           </button>
         </div>
       </div>

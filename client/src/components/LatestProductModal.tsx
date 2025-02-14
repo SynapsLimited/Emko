@@ -1,90 +1,80 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { X } from 'lucide-react'
-import './../css/latestproductmodal.css'
+// src/components/LatestProductModal.jsx
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { X } from 'lucide-react';
+import './../css/latestproductmodal.css';
+import { useTranslation } from 'react-i18next';
 
 interface LatestProduct {
-  _id: string
-  name: string
-  name_en?: string
-  slug: string
-  images: string[]
-  variations: string[]
-  variations_en?: string[]
-  description: string
-  description_en?: string
-  colors?: { hex: string }[]
-  createdAt: string
+  _id: string;
+  name: string;
+  name_en?: string;
+  slug: string;
+  images: string[];
+  variations: string[];
+  variations_en?: string[];
+  description: string;
+  description_en?: string;
+  colors?: { hex: string }[];
+  createdAt: string;
 }
 
 interface LatestProductModalProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const LatestProductModal: React.FC<LatestProductModalProps> = ({ isOpen, onClose }) => {
-  const [latestProducts, setLatestProducts] = useState<LatestProduct[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const { i18n } = useTranslation()
-  const currentLanguage = i18n.language || 'en'
-  const modalRef = useRef<HTMLDivElement>(null)
+  const [latestProducts, setLatestProducts] = useState<LatestProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { i18n, t } = useTranslation();
+  const currentLanguage = i18n.language || 'en';
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const truncateDescription = (text: string, wordLimit: number): string => {
-    const words = text.split(' ')
-    if (words.length > wordLimit) {
-      return words.slice(0, wordLimit).join(' ') + '...'
-    }
-    return text
-  }
+    const words = text.split(' ');
+    return words.length > wordLimit ? words.slice(0, wordLimit).join(' ') + '...' : text;
+  };
 
   useEffect(() => {
-    if (!isOpen) return
-
+    if (!isOpen) return;
     const fetchLatestProducts = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
-        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/products`)
-        const data: LatestProduct[] = await response.json()
-
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/products`);
+        const data: LatestProduct[] = await response.json();
         if (Array.isArray(data)) {
-          const sortedProducts = data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-          const latestTen = sortedProducts.slice(0, 10)
-          setLatestProducts(latestTen)
+          const sortedProducts = data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          setLatestProducts(sortedProducts.slice(0, 10));
         } else {
-          console.error('Fetched products is not an array:', data)
-          setLatestProducts([])
+          console.error('Fetched products is not an array:', data);
+          setLatestProducts([]);
         }
       } catch (error) {
-        console.error('Error fetching latest products:', error)
-        setLatestProducts([])
+        console.error('Error fetching latest products:', error);
+        setLatestProducts([]);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
-
-    fetchLatestProducts()
-  }, [isOpen])
+    };
+    fetchLatestProducts();
+  }, [isOpen]);
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose()
-      }
-    }
-
+      if (event.key === 'Escape') onClose();
+    };
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'hidden'
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
     }
-
     return () => {
-      document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'unset'
-    }
-  }, [isOpen, onClose])
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
@@ -96,12 +86,8 @@ const LatestProductModal: React.FC<LatestProductModalProps> = ({ isOpen, onClose
         aria-labelledby="modal-title"
       >
         <div className="flex justify-between items-center p-6 border-b">
-          <h2 id="modal-title" className="text-2xl font-bold">Latest Products</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-            aria-label="Close modal"
-          >
+          <h2 id="modal-title" className="text-2xl font-bold">{t('latestProductModal.title')}</h2>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors" aria-label="Close modal">
             <X size={24} />
           </button>
         </div>
@@ -116,10 +102,9 @@ const LatestProductModal: React.FC<LatestProductModalProps> = ({ isOpen, onClose
                   </div>
                 ))
               : latestProducts.map((product) => {
-                  const name = currentLanguage === 'en' ? product.name_en || product.name : product.name
-                  const description = currentLanguage === 'en' ? product.description_en || product.description : product.description
-                  const variations = currentLanguage === 'en' ? product.variations_en || product.variations : product.variations
-
+                  const name = currentLanguage === 'en' ? product.name_en || product.name : product.name;
+                  const description = currentLanguage === 'en' ? product.description_en || product.description : product.description;
+                  const variations = currentLanguage === 'en' ? product.variations_en || product.variations : product.variations;
                   return (
                     <div key={product._id} className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg product-card">
                       <div className="aspect-w-16 aspect-h-9">
@@ -157,18 +142,17 @@ const LatestProductModal: React.FC<LatestProductModalProps> = ({ isOpen, onClose
                           to={`/products/${product.slug}`}
                           className="block w-full text-center bg-primary hover:bg-primary text-white font-semibold py-2 px-4 rounded transition-colors duration-300"
                         >
-                          View Details
+                          {t('latestProductModal.viewDetails')}
                         </Link>
                       </div>
                     </div>
-                  )
+                  );
                 })}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LatestProductModal
-
+export default LatestProductModal;
