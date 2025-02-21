@@ -18,7 +18,7 @@ const PrivacyPolicy = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://www.emko-client.vercel.app/privacy-policy" />
       </Helmet>
-
+    <div className= 'pt-[40px]'>
       <h1>{t('privacyPolicy.title')}</h1>
 
       <section>
@@ -99,6 +99,7 @@ const PrivacyPolicy = () => {
           <li><b>{t('privacyPolicy.phone')}</b></li>
         </ul>
       </section>
+      </div>
     </div>
   );
 };
