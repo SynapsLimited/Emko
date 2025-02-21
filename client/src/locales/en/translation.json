@@ -8,10 +8,6 @@
     "searchPlaceholder": "Search...",
     "latestProduct": "Latest Products"
   },
-  "hero": {
-    "welcome": "Welcome to Emko",
-    "defaultTitle": "Category or Page Title"
-  },
   "about": {
     "pageTitle": "Emko - About Us",
     "heroTitle": "About Us",
@@ -167,5 +163,31 @@
   "latestProductModal": {
     "title": "Latest Products",
     "viewDetails": "View Details"
+  },
+  "hero": {
+    "home": {
+      "title": "Where everything comes together",
+      "description": "With 18 years of expertise in crafting high-quality office and educational furniture, EMKO blends innovation, precision, and personalized service to transform your workspace."
+    },
+    "about": {
+      "title": "Discover EMKO",
+      "description": "For 18 years, EMKO has built a respected legacy in the Albanian and regional market as a patented manufacturer. We provide tailor-made, high-quality furniture solutions, placing every client’s needs at the heart of what we do."
+    },
+    "products": {
+      "title": "Our Products",
+      "description": "Explore our innovative range of office and educational furniture, designed and manufactured to meet the highest quality standards and your specific requirements."
+    },
+    "projects": {
+      "title": "Our Projects",
+      "description": "Discover our successful projects – including the renowned EMKO Slider – that highlight our dedication to innovation, quality, and aesthetic excellence."
+    },
+    "certifications": {
+      "title": "Certifications",
+      "description": "Our commitment to accuracy, quality, and professionalism is validated by international standards, including the UNE-EN-ISO 9001/08 certification."
+    },
+    "contact": {
+      "title": "Get In Touch",
+      "description": "Reach out to learn more about how EMKO’s tailored, high-quality furniture solutions can elevate your workspace."
+    }
   }
 }

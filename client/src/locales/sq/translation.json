@@ -8,10 +8,6 @@
     "searchPlaceholder": "Kërko...",
     "latestProduct": "Produktet më të fundit"
   },
-  "hero": {
-    "welcome": "Mirësevini te Emko",
-    "defaultTitle": "Kategoria ose Titulli i Faqes"
-  },
   "about": {
     "pageTitle": "Emko - Rreth Nesh",
     "heroTitle": "Rreth Nesh",
@@ -163,5 +159,32 @@
   "latestProductModal": {
     "title": "Produktet më të fundit",
     "viewDetails": "Shiko Detajet"
+  },
+    "hero": {
+      "home": {
+        "title": "Where everything comes together",
+        "description": "Me 18 vjet përvojë në krijimin e mobiljeve të zyrave dhe të institucioneve arsimore me cilësi të lartë, EMKO përzien inovacionin, precizionin dhe shërbimin e personalizuar për të transformuar hapësirën tuaj të punës."
+      },
+      "about": {
+        "title": "Zbulo EMKO",
+        "description": "Për 18 vjet, EMKO ka ndërtuar një trashëgimi të respektuar në tregun shqiptar dhe rajonal si një prodhues me patentë. Ne ofrojmë zgjidhje mobiljesh të përshtatura dhe me cilësi të lartë, duke vendosur nevojat e çdo klienti në zemër të asaj që bëjmë."
+      },
+      "products": {
+        "title": "Produktet Tona",
+        "description": "Eksploroni gamën tonë inovative të mobiljeve për zyrat dhe institucionet arsimore, të dizajnuara dhe prodhuara për të përmbushur standardet më të larta të cilësisë dhe kërkesat specifike të juaja."
+      },
+      "projects": {
+        "title": "Projektet Tona",
+        "description": "Zbuloni projektet tona të suksesshme – përfshirë edhe EMKO Slider të njohur – që theksojnë përkushtimin tonë ndaj inovacionit, cilësisë dhe elegancës estetike."
+      },
+      "certifications": {
+        "title": "Certifikimet",
+        "description": "Përkushtimi ynë ndaj saktësisë, cilësisë dhe profesionalizmit është verifikuar nga standardet ndërkombëtare, duke përfshirë certifikatën UNE-EN-ISO 9001/08."
+      },
+      "contact": {
+        "title": "Na Kontaktoni",
+        "description": "Na kontaktoni për të mësuar më shumë rreth zgjidhjeve të mobiljeve të personalizuara dhe me cilësi të lartë të EMKO që mund të rrisin hapësirën tuaj të punës."
+      }
+    }
   }
-}
+  

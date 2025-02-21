@@ -219,9 +219,14 @@ export default function Navbar() {
         }`}
       >
         <div className="container mx-auto flex items-center justify-between px-4">
-          <Link to="/" className="font-bold text-primary">
-            <img className="w-[70px] h-[70px]" src="/assets/emko-logo.png" alt="Logo" />
-          </Link>
+        <Link to="/" className="font-bold text-primary relative">
+          <img
+            className="w-[70px] h-[70px] transform scale-[1.8]"
+            src="/assets/emko-logo.png"
+            alt="Logo"
+          />
+        </Link>
+
           <div className="hidden md:flex items-center space-x-8">
             <NavLinks />
             <div className="flex items-center space-x-2">

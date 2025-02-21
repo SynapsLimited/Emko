@@ -78,7 +78,7 @@ export default function Projects() {
   };
 
   if (loading) {
-    return <div className="loader">{t('projects.loading')}</div>;
+    return <div className="loader">Loading</div>;
   }
 
   if (error) {
